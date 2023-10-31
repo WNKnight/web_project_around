@@ -19,7 +19,7 @@
   display: none;
 }
 .popup__close {
-  background-image: url(/images/Close-Icon.png);
+  background-image: url(../images/Close-Icon.png);
   position: absolute;
   bottom: 100%;
   left: 100%;
