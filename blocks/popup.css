@@ -75,3 +75,26 @@
   opacity: 60%;
   transition: linear 0.2s;
 }
+@media screen and (min-width: 320px) and (max-width: 420px) {
+  .popup {
+    width: 90%;
+    top: 4%;
+    left: 5%;
+  }
+  .popup__title {
+    width: 76.7%;
+    font-size: 18px;
+    margin: 25px auto 76px;
+  }
+  .popup__form {
+    margin: 0 auto 46px;
+  }
+  .popup__close {
+    width: 26px;
+    left: 90%;
+  }
+  .form__submit-btn {
+    width: 83.2%;
+    margin: 0 22px 25px;
+  }
+}

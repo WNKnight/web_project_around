@@ -48,3 +48,27 @@
 .gallery__like-button_active {
   background-image: url(/images/like-active.png);
 }
+@media screen and (min-width: 320px) and (max-width: 425px) {
+  .gallery {
+    width: 282px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: auto;
+  }
+  .gallery__block {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+  .gallery__info {
+    display: flex;
+    flex-direction: row;
+    background-color: #fff;
+    padding: 25px 15px 31px 21px;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
