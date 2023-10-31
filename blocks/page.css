@@ -1,0 +1,12 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 880px;
+  background-color: black;
+  font-family: "Inter", "Arial Narrow Bold", sans-serif;
+  position: relative;
+}
+.content {
+  width: 100%;
+}
