@@ -6,7 +6,7 @@ let profileName = document.querySelector(".profile__name");
 let profileAbout = document.querySelector(".profile__about");
 let nameInput = document.getElementById("pName");
 let aboutInput = document.getElementById("pAboutme");
-let saveButton = document.querySelector(".form__submit-btn");
+let saveButton = document.querySelector(".popup__form-submit-button");
 let formElement = document.querySelector(".popup__form");
 let likeButtons = document.querySelectorAll(".gallery__like-button");
 
