@@ -23,8 +23,28 @@
                   <h3 class="profile__about">Explorar</h3>
                 </div>
                 <button class="add__button" id="addButton"></button>
-              </div>
-              
+              </div>         
+        <div class="popup">
+            <div class="popup__close"></div>
+            <h2 class="popup__title">Editar Perfil</h2>
+            <form class="popup__form">
+              <input
+                type="text"
+                placeholder="Nome"
+                id="pName"
+                class="popup-text"
+              />
+              <input
+                type="text"
+                placeholder="Sobre Mim"
+                id="pAboutme"
+                class="popup-text"
+              />
+            </form>
+            <button class="form__submit-btn">Salvar</button>
+          </div>
+          <div class="overlay"></div>
+  
         <section class="gallery">
             <div class="gallery__block">
               <img
