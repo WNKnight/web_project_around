@@ -59,7 +59,7 @@
   font-weight: 400;
   line-height: 1.21;
 }
-.form__submit-btn {
+.popup__form-submit-button {
   width: 83.2%;
   margin: 0 36px 36px;
   background-color: #000;
@@ -70,7 +70,7 @@
   font-weight: 400;
   line-height: 1.22;
 }
-.form__submit-btn:hover {
+.popup__form-submit-button:hover {
   cursor: pointer;
   opacity: 60%;
   transition: linear 0.2s;
@@ -93,7 +93,7 @@
     width: 26px;
     left: 90%;
   }
-  .form__submit-btn {
+  .popup__form-submit-button {
     width: 83.2%;
     margin: 0 22px 25px;
   }

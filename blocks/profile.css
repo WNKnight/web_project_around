@@ -33,7 +33,7 @@
   grid-area: 2;
   margin: 16px 0 0;
 }
-.edit__button {
+.profile__edit-button {
   background-color: black;
   background-image: url(../images/Edit-Button.png);
   background-repeat: no-repeat;
@@ -42,12 +42,12 @@
   margin-left: 16px;
   border: none;
 }
-.edit__button:hover {
+.profile__edit-button:hover {
   cursor: pointer;
   opacity: 60%;
   transition: linear 0.2s;
 }
-.add__button {
+.profile__add-button {
   background-color: #000;
   background-image: url(../images/Add-Button.png);
   width: 150px;
@@ -55,7 +55,7 @@
   background-repeat: no-repeat;
   border: none;
 }
-.add__button:hover {
+.profile__add-button:hover {
   cursor: pointer;
   opacity: 60%;
   transition: linear 0.2s;
@@ -89,7 +89,7 @@
     line-height: 1.21;
     margin: 16px 0 0;
   }
-  .add__button {
+  .profile__add-button {
     width: 100%;
     background-image: url(../images/Add-Button-mobile.png);
   }
