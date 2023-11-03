@@ -25,6 +25,8 @@
   font-weight: 500;
   line-height: 1.14;
   margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .profile__about {
   font-size: 18px;
@@ -32,6 +34,8 @@
   line-height: 1.22;
   grid-area: 2;
   margin: 16px 0 0;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .profile__edit-button {
   background-color: black;

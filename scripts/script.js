@@ -1,14 +1,14 @@
-let editButton = document.getElementById("editButton");
-let popup = document.querySelector(".popup");
-let overlay = document.querySelector(".overlay");
-let closeButton = document.querySelector(".popup__close");
+const editButton = document.getElementById("editButton");
+const popup = document.querySelector(".popup");
+const overlay = document.querySelector(".overlay");
+const closeButton = document.querySelector(".popup__close");
 let profileName = document.querySelector(".profile__name");
 let profileAbout = document.querySelector(".profile__about");
-let nameInput = document.getElementById("pName");
-let aboutInput = document.getElementById("pAboutme");
-let saveButton = document.querySelector(".popup__form-submit-button");
-let formElement = document.querySelector(".popup__form");
-let likeButtons = document.querySelectorAll(".gallery__like-button");
+const nameInput = document.getElementById("pName");
+const aboutInput = document.getElementById("pAboutme");
+const saveButton = document.querySelector(".popup__form-submit-button");
+const formElement = document.querySelector(".popup__form");
+const likeButtons = document.querySelectorAll(".gallery__like-button");
 
 nameInput.value = profileName.textContent;
 aboutInput.value = profileAbout.textContent;
