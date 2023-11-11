@@ -25,7 +25,7 @@
           </div>
           <button class="profile__add-button" id="addButton"></button>
         </div>
-        <div class="popup">
+        <div class="popup" id="Edit__Popup">
           <div class="popup__close"></div>
           <h2 class="popup__title">Editar Perfil</h2>
           <form class="popup__form">
@@ -43,6 +43,27 @@
             />
           </form>
           <button class="popup__form-submit-button">Salvar</button>
+        </div>
+        <div class="popup" id="newLocation__Popup">
+          <div class="popup__close"></div>
+          <h2 class="popup__title" id="pAdd">Novo Local</h2>
+          <form class="popup__form">
+            <input
+              type="text"
+              placeholder="Título"
+              id="pTitle"
+              class="popup__text"
+            />
+            <input
+              type="url"
+              placeholder="Link de Imagem"
+              id="pLink"
+              class="popup__text"
+            />
+          </form>
+          <button class="popup__form-submit-button" id="addButton">
+            Criar
+          </button>
         </div>
         <div class="overlay"></div>
         <section class="gallery"></section>

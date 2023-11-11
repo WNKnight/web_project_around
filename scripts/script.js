@@ -8,7 +8,15 @@ const nameInput = document.getElementById("pName");
 const aboutInput = document.getElementById("pAboutme");
 const saveButton = document.querySelector(".popup__form-submit-button");
 const formElement = document.querySelector(".popup__form");
-const likeButtons = document.querySelectorAll(".gallery__like-button");
+const newLocationPopup = document.getElementById("newLocation__Popup");
+const addLocationButton = document.getElementById("addButton");
+const closeButtonNewLocationPopup =
+  newLocationPopup.querySelector(".popup__close");
+const pTitleInput = document.getElementById("pTitle");
+const pLinkInput = document.getElementById("pLink");
+const addImageToGalleryButton = newLocationPopup.querySelector(
+  ".popup__form-submit-button"
+);
 
 nameInput.value = profileName.textContent;
 aboutInput.value = profileAbout.textContent;
@@ -40,8 +48,9 @@ initialCards = [
   },
 ];
 
+//função para criar cartão para a  gallery e botao de curtir funcional//
 const gallerySection = document.querySelector(".gallery");
-//função para criar cartão para a gallery//
+
 initialCards.forEach((card) => {
   const cardElement = document.createElement("div");
   cardElement.classList.add("gallery__block");
@@ -78,7 +87,8 @@ initialCards.forEach((card) => {
 
   gallerySection.appendChild(cardElement);
 });
-///////////////////////////////////////////////////////////////////////////////
+
+//Pop-up Editar Perfil//
 function handleSaveButtonClick() {
   let newName = nameInput.value;
   let newAbout = aboutInput.value;
@@ -91,33 +101,22 @@ function handleSaveButtonClick() {
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  let nameInput = document.getElementById("pName");
-  let jobInput = document.getElementById("pAboutme");
-
   let newName = nameInput.value;
-  let newAbout = jobInput.value;
-
-  let profileName = document.querySelector(".profile__name");
-  let profileAbout = document.querySelector(".profile__about");
+  let newAbout = aboutInput.value;
 
   profileName.textContent = newName;
   profileAbout.textContent = newAbout;
 
   closePopup();
 }
-
 function openPopup() {
-  popup.style.display = "block";
-  overlay.style.display = "block";
+  popup.classList.add("show");
+  overlay.classList.add("show");
 }
 
 function closePopup() {
-  popup.style.display = "none";
-  overlay.style.display = "none";
-}
-
-function toggleLikeState() {
-  this.classList.toggle("gallery__like-button_active");
+  popup.classList.remove("show");
+  overlay.classList.remove("show");
 }
 
 editButton.addEventListener("click", openPopup);
@@ -125,6 +124,63 @@ closeButton.addEventListener("click", closePopup);
 saveButton.addEventListener("click", handleSaveButtonClick);
 formElement.addEventListener("submit", handleProfileFormSubmit);
 
-likeButtons.forEach(function (likeButton) {
-  likeButton.addEventListener("click", toggleLikeState);
-});
+//Pop-up para adicionar novas imagens a gallery//
+const allImages = document.querySelectorAll(".gallery__img");
+
+function addImageToGallery() {
+  const title = pTitleInput.value;
+  const link = pLinkInput.value;
+
+  if (title && link) {
+    const cardElement = document.createElement("div");
+    cardElement.classList.add("gallery__block");
+
+    const imgElement = document.createElement("img");
+    imgElement.classList.add("gallery__img");
+    imgElement.src = link;
+    imgElement.alt = title;
+
+    const infoElement = document.createElement("div");
+    infoElement.classList.add("gallery__info");
+
+    const titleElement = document.createElement("h2");
+    titleElement.classList.add("gallery__img-name");
+    titleElement.textContent = title;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.classList.add("gallery__delete-button");
+    deleteButton.addEventListener("click", () => {
+      cardElement.remove();
+    });
+
+    const likeButton = document.createElement("button");
+    likeButton.classList.add("gallery__like-button");
+    likeButton.addEventListener("click", () => {
+      likeButton.classList.toggle("gallery__like-button_active");
+    });
+
+    cardElement.appendChild(imgElement);
+    cardElement.appendChild(deleteButton);
+    cardElement.appendChild(infoElement);
+    infoElement.appendChild(titleElement);
+    infoElement.appendChild(likeButton);
+
+    gallerySection.prepend(cardElement);
+
+    closeNewLocationPopup();
+  }
+}
+
+function openNewLocationPopup() {
+  newLocationPopup.classList.add("show");
+  overlay.classList.add("show");
+}
+
+function closeNewLocationPopup() {
+  newLocationPopup.classList.remove("show");
+  overlay.classList.remove("show");
+}
+
+addLocationButton.addEventListener("click", openNewLocationPopup);
+closeButtonNewLocationPopup.addEventListener("click", closeNewLocationPopup);
+addImageToGalleryButton.addEventListener("click", addImageToGallery);
