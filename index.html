@@ -25,7 +25,7 @@
           </div>
           <button class="profile__add-button" id="addButton"></button>
         </div>
-        <div class="popup" id="Edit__Popup">
+        <div class="popup" id="editPopup">
           <div class="popup__close"></div>
           <h2 class="popup__title" id="pEdit">Editar Perfil</h2>
           <form class="popup__form">
@@ -44,8 +44,8 @@
           </form>
           <button class="popup__form-submit-button">Salvar</button>
         </div>
-        <div class="popup" id="newLocation__Popup">
-          <div class="popup__close"></div>
+        <div class="popup" id="newLocationPopup">
+          <div class="popup__close" id="closeNewLocation"></div>
           <h2 class="popup__title" id="pAdd">Novo Local</h2>
           <form class="popup__form">
             <input
@@ -65,13 +65,14 @@
             Criar
           </button>
         </div>
-        <div class="popup__gallery">
-          <img class="popup__gallery-image" id="popupImage" alt="" />
-          <div class="popup__gallery-close"></div>
-          <h2 class="popup__galery-text" id="PopUpImageTitle"></h2>
-        </div>
         <div class="overlay"></div>
-        <section class="gallery"></section>
+        <section class="gallery">
+          <div class="popup-image-container">
+            <img class="popup-image" id="popupImage" alt="" />
+            <div class="popup__close-image"></div>
+            <h2 class="popup-image-text" id="PopUpImageTitle"></h2>
+          </div>
+        </section>
         <footer class="footer">
           <h2 class="footer__copyright">&copy; 2023 Around The U.S.</h2>
         </footer>

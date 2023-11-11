@@ -8,10 +8,9 @@ const nameInput = document.getElementById("pName");
 const aboutInput = document.getElementById("pAboutme");
 const saveButton = document.querySelector(".popup__form-submit-button");
 const formElement = document.querySelector(".popup__form");
-const newLocationPopup = document.getElementById("newLocation__Popup");
+const newLocationPopup = document.getElementById("newLocationPopup");
 const addLocationButton = document.getElementById("addButton");
-const closeButtonNewLocationPopup =
-  newLocationPopup.querySelector(".popup__close");
+const closeButtonNewLocationPopup = document.getElementById("closeNewLocation");
 const pTitleInput = document.getElementById("pTitle");
 const pLinkInput = document.getElementById("pLink");
 const createButton = document.getElementById("createButton");
@@ -110,6 +109,7 @@ function handleProfileFormSubmit(evt) {
 
   closePopup();
 }
+
 function openPopup() {
   popup.classList.add("show");
   overlay.classList.add("show");
@@ -185,31 +185,29 @@ function closeNewLocationPopup() {
 addLocationButton.addEventListener("click", openNewLocationPopup);
 closeButtonNewLocationPopup.addEventListener("click", closeNewLocationPopup);
 addImageToGalleryButton.addEventListener("click", addImageToGallery);
+
 //Pop-up das Imagens da Gallery//
+const closeImage = document.querySelector(".popup__close-image");
+const popupImageContainer = document.querySelector(".popup-image-container");
+const popupImage = document.querySelector(".popup-image");
 
-const closeImage = document.querySelector(".popup__gallery-close");
-const popupImageContainer = document.querySelector(".popup__gallery");
-const popupImage = document.querySelector(".popup__gallery-image");
+document.addEventListener("click", function (event) {
+  if (event.target.classList.contains("gallery__img")) {
+    const clickedImage = event.target.src;
+    const clickedImageAlt = event.target.alt;
 
-gallerySection.addEventListener("click", function (event) {
-  const clickedImage = event.target.closest(".gallery__img");
-
-  if (clickedImage) {
-    const { src, alt } = clickedImage;
-
-    popupImageContainer.classList.toggle("show", true);
-    popupImage.classList.toggle("show", true);
-    overlay.classList.toggle("show", true);
-
-    const popupImageElement = popupImageContainer.querySelector("#popupImage");
-    popupImageElement.src = src;
-    popupImageElement.alt = alt;
-    popupImageContainer.querySelector("#PopUpImageTitle").textContent = alt;
+    popupImageContainer.classList.add("show");
+    popupImage.classList.add("show");
+    overlay.classList.add("show");
+    popupImageContainer.querySelector("#popupImage").src = clickedImage;
+    popupImageContainer.querySelector("#popupImage").alt = clickedImageAlt;
+    popupImageContainer.querySelector("#PopUpImageTitle").textContent =
+      clickedImageAlt;
   }
 });
 
 closeImage.addEventListener("click", () => {
-  [popupImageContainer, popupImage, overlay].forEach((el) =>
-    el.classList.remove("show")
-  );
+  popupImageContainer.classList.remove("show");
+  popupImage.classList.remove("show");
+  overlay.classList.remove("show");
 });
