@@ -120,7 +120,7 @@
   line-height: 1.25;
   color: #fff;
 }
-.popup__close-image {
+.popup-close-image {
   background-image: url(../images/Close-Icon.png);
   position: absolute;
   bottom: 100%;
@@ -131,7 +131,7 @@
   transform: rotate(0deg);
   background-position: center;
 }
-.popup__close-image:hover {
+.popup-close-image:hover {
   cursor: pointer;
 }
 

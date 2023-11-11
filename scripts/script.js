@@ -187,7 +187,7 @@ closeButtonNewLocationPopup.addEventListener("click", closeNewLocationPopup);
 addImageToGalleryButton.addEventListener("click", addImageToGallery);
 
 //Pop-up das Imagens da Gallery//
-const closeImage = document.querySelector(".popup__close-image");
+const closeImage = document.querySelector(".popup-close-image");
 const popupImageContainer = document.querySelector(".popup-image-container");
 const popupImage = document.querySelector(".popup-image");
 
