@@ -14,6 +14,7 @@ const closeButtonNewLocationPopup =
   newLocationPopup.querySelector(".popup__close");
 const pTitleInput = document.getElementById("pTitle");
 const pLinkInput = document.getElementById("pLink");
+const createButton = document.getElementById("createButton");
 const addImageToGalleryButton = newLocationPopup.querySelector(
   ".popup__form-submit-button"
 );
@@ -185,6 +186,7 @@ addLocationButton.addEventListener("click", openNewLocationPopup);
 closeButtonNewLocationPopup.addEventListener("click", closeNewLocationPopup);
 addImageToGalleryButton.addEventListener("click", addImageToGallery);
 //Pop-up das Imagens da Gallery//
+
 const closeImage = document.querySelector(".popup__close-image");
 const popupImageContainer = document.querySelector(".popup__image-container");
 const popupImage = document.querySelector(".popup__image");
