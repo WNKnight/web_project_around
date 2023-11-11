@@ -1,13 +1,15 @@
 .page {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   width: 880px;
   background-color: black;
   font-family: "Inter", "Arial Narrow Bold", sans-serif;
   position: relative;
 }
+
 .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   width: 100%;
 }
 @media screen and (min-width: 320px) and (max-width: 425px) {
