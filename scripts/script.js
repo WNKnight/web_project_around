@@ -51,32 +51,36 @@ initialCards = [
 //função para criar cartão para a  gallery e botao de curtir funcional//
 const gallerySection = document.querySelector(".gallery");
 
+const galleryList = document.createElement("ul");
+galleryList.classList.add("card-list");
+gallerySection.appendChild(galleryList);
+
 initialCards.forEach((card) => {
-  const cardElement = document.createElement("div");
-  cardElement.classList.add("gallery__block");
+  const cardElement = document.createElement("li");
+  cardElement.classList.add("card");
 
   const imgElement = document.createElement("img");
-  imgElement.classList.add("gallery__img");
+  imgElement.classList.add("card__img");
   imgElement.src = card.link;
   imgElement.alt = card.name;
 
   const infoElement = document.createElement("div");
-  infoElement.classList.add("gallery__info");
+  infoElement.classList.add("card__info");
 
   const titleElement = document.createElement("h2");
-  titleElement.classList.add("gallery__img-name");
+  titleElement.classList.add("card__img-name");
   titleElement.textContent = card.name;
 
   const deleteButton = document.createElement("button");
-  deleteButton.classList.add("gallery__delete-button");
+  deleteButton.classList.add("card__delete-button");
   deleteButton.addEventListener("click", () => {
     cardElement.remove();
   });
 
   const likeButton = document.createElement("button");
-  likeButton.classList.add("gallery__like-button");
+  likeButton.classList.add("card__like-button");
   likeButton.addEventListener("click", () => {
-    likeButton.classList.toggle("gallery__like-button_active");
+    likeButton.classList.toggle("card__like-button_active");
   });
 
   cardElement.appendChild(imgElement);
@@ -85,7 +89,7 @@ initialCards.forEach((card) => {
   infoElement.appendChild(titleElement);
   infoElement.appendChild(likeButton);
 
-  gallerySection.appendChild(cardElement);
+  galleryList.appendChild(cardElement);
 });
 
 //Pop-up Editar Perfil//
@@ -133,31 +137,33 @@ function addImageToGallery() {
   const link = pLinkInput.value;
 
   if (title && link) {
-    const cardElement = document.createElement("div");
-    cardElement.classList.add("gallery__block");
+    const cardList = document.querySelector(".card-list");
+
+    const cardElement = document.createElement("li");
+    cardElement.classList.add("card");
 
     const imgElement = document.createElement("img");
-    imgElement.classList.add("gallery__img");
+    imgElement.classList.add("card__img");
     imgElement.src = link;
     imgElement.alt = title;
 
     const infoElement = document.createElement("div");
-    infoElement.classList.add("gallery__info");
+    infoElement.classList.add("card__info");
 
     const titleElement = document.createElement("h2");
-    titleElement.classList.add("gallery__img-name");
+    titleElement.classList.add("card__img-name");
     titleElement.textContent = title;
 
     const deleteButton = document.createElement("button");
-    deleteButton.classList.add("gallery__delete-button");
+    deleteButton.classList.add("card__delete-button");
     deleteButton.addEventListener("click", () => {
       cardElement.remove();
     });
 
     const likeButton = document.createElement("button");
-    likeButton.classList.add("gallery__like-button");
+    likeButton.classList.add("card__like-button");
     likeButton.addEventListener("click", () => {
-      likeButton.classList.toggle("gallery__like-button_active");
+      likeButton.classList.toggle("card__like-button_active");
     });
 
     cardElement.appendChild(imgElement);
@@ -166,7 +172,8 @@ function addImageToGallery() {
     infoElement.appendChild(titleElement);
     infoElement.appendChild(likeButton);
 
-    gallerySection.prepend(cardElement);
+    // Adiciona o novo cartão no início da lista
+    cardList.insertBefore(cardElement, cardList.firstChild);
 
     closeNewLocationPopup();
   }
@@ -192,7 +199,7 @@ const popupImageContainer = document.querySelector(".popup-image-container");
 const popupImage = document.querySelector(".popup-image");
 
 document.addEventListener("click", function (event) {
-  if (event.target.classList.contains("gallery__img")) {
+  if (event.target.classList.contains("card__img")) {
     const clickedImage = event.target.src;
     const clickedImageAlt = event.target.alt;
 

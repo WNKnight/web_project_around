@@ -98,7 +98,6 @@
   opacity: 0;
   top: 10%;
 }
-
 .popup-image-container.show {
   opacity: 1;
   visibility: visible;
