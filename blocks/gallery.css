@@ -7,7 +7,7 @@
   display: flex;
   padding: 0;
   margin: 0;
-  gap: 18px;
+  gap: min(2vw, 18px);
   flex-flow: row wrap;
 }
 .card {
