@@ -21,7 +21,7 @@ const addImageToGalleryButton = newLocationPopup.querySelector(
 nameInput.value = profileName.textContent;
 aboutInput.value = profileAbout.textContent;
 
-initialCards = [
+const initialCards = [
   {
     name: "Vale de Yosemite",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg",
@@ -55,7 +55,7 @@ const galleryList = document.createElement("ul");
 galleryList.classList.add("card-list");
 gallerySection.appendChild(galleryList);
 
-initialCards.forEach((card) => {
+function createCard(card) {
   const cardElement = document.createElement("li");
   cardElement.classList.add("card");
 
@@ -89,8 +89,30 @@ initialCards.forEach((card) => {
   infoElement.appendChild(titleElement);
   infoElement.appendChild(likeButton);
 
-  galleryList.appendChild(cardElement);
-});
+  return cardElement;
+}
+
+function addCardToGallery(card) {
+  const cardList = document.querySelector(".card-list");
+  const cardElement = createCard(card);
+
+  // Adiciona o novo cartão no início da lista
+  cardList.insertBefore(cardElement, cardList.firstChild);
+}
+
+initialCards.forEach(addCardToGallery);
+
+function addImageToGallery() {
+  const title = pTitleInput.value;
+  const link = pLinkInput.value;
+
+  if (title && link) {
+    const card = { name: title, link: link };
+    addCardToGallery(card);
+
+    closeNewLocationPopup();
+  }
+}
 
 //Pop-up Editar Perfil//
 function handleSaveButtonClick() {
