@@ -90,7 +90,7 @@
   cursor: pointer;
   opacity: 60%;
 }
-.popup-image-container {
+.popup__image-container {
   visibility: hidden;
   position: fixed;
   z-index: 2;
@@ -98,7 +98,7 @@
   opacity: 0;
   top: 10%;
 }
-.popup-image-container.show {
+.popup__image-container.show {
   opacity: 1;
   visibility: visible;
 }
@@ -118,20 +118,6 @@
   font-weight: 400;
   line-height: 1.25;
   color: #fff;
-}
-.popup-close-image {
-  background-image: url(../images/Close-Icon.png);
-  position: absolute;
-  bottom: 100%;
-  left: 100%;
-  background-repeat: no-repeat;
-  width: 40px;
-  height: 40px;
-  transform: rotate(0deg);
-  background-position: center;
-}
-.popup-close-image:hover {
-  cursor: pointer;
 }
 
 @media screen and (min-width: 320px) and (max-width: 420px) {
