@@ -2,8 +2,8 @@ const editButton = document.getElementById("editButton");
 const popup = document.querySelector(".popup");
 const overlay = document.querySelector(".overlay");
 const closeButton = document.querySelector(".popup__close");
-let profileName = document.querySelector(".profile__name");
-let profileAbout = document.querySelector(".profile__about");
+const profileName = document.querySelector(".profile__name");
+const profileAbout = document.querySelector(".profile__about");
 const nameInput = document.getElementById("pName");
 const aboutInput = document.getElementById("pAboutme");
 const saveButton = document.querySelector(".popup__form-submit-button");
@@ -39,7 +39,7 @@ const initialCards = [
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_latemar.jpg",
   },
   {
-    name: "Parque Nacional da Vanoise ",
+    name: "Parque Nacional da Vanoise",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_vanoise.jpg",
   },
   {
@@ -48,56 +48,34 @@ const initialCards = [
   },
 ];
 
-//função para criar cartão para a  gallery e botao de curtir funcional//
-const gallerySection = document.querySelector(".gallery");
-
-const galleryList = document.createElement("ul");
-galleryList.classList.add("card-list");
-gallerySection.appendChild(galleryList);
+const galleryList = document.querySelector(".card-list");
+const cardTemplate = document.getElementById("cardTemplate");
 
 function createCard(card) {
-  const cardElement = document.createElement("li");
-  cardElement.classList.add("card");
+  const cardClone = document.importNode(cardTemplate.content, true);
+  const imgElement = cardClone.querySelector(".card__img");
+  const deleteButton = cardClone.querySelector(".card__delete-button");
+  const titleElement = cardClone.querySelector(".card__img-name");
+  const likeButton = cardClone.querySelector(".card__like-button");
 
-  const imgElement = document.createElement("img");
-  imgElement.classList.add("card__img");
   imgElement.src = card.link;
   imgElement.alt = card.name;
-
-  const infoElement = document.createElement("div");
-  infoElement.classList.add("card__info");
-
-  const titleElement = document.createElement("h2");
-  titleElement.classList.add("card__img-name");
   titleElement.textContent = card.name;
 
-  const deleteButton = document.createElement("button");
-  deleteButton.classList.add("card__delete-button");
   deleteButton.addEventListener("click", () => {
+    const cardElement = deleteButton.closest(".card");
     cardElement.remove();
   });
 
-  const likeButton = document.createElement("button");
-  likeButton.classList.add("card__like-button");
   likeButton.addEventListener("click", () => {
     likeButton.classList.toggle("card__like-button_active");
   });
 
-  cardElement.appendChild(imgElement);
-  cardElement.appendChild(deleteButton);
-  cardElement.appendChild(infoElement);
-  infoElement.appendChild(titleElement);
-  infoElement.appendChild(likeButton);
-
-  return cardElement;
+  return cardClone;
 }
 
 function addCardToGallery(card) {
-  const cardList = document.querySelector(".card-list");
-  const cardElement = createCard(card);
-
-  // Adiciona o novo cartão no início da lista
-  cardList.insertBefore(cardElement, cardList.firstChild);
+  galleryList.prepend(createCard(card));
 }
 
 initialCards.forEach(addCardToGallery);
@@ -107,32 +85,15 @@ function addImageToGallery() {
   const link = pLinkInput.value;
 
   if (title && link) {
-    const card = { name: title, link: link };
-    addCardToGallery(card);
-
+    addCardToGallery({ name: title, link: link });
     closeNewLocationPopup();
   }
 }
 
-//Pop-up Editar Perfil//
-function handleSaveButtonClick() {
-  let newName = nameInput.value;
-  let newAbout = aboutInput.value;
-
-  profileName.textContent = newName;
-  profileAbout.textContent = newAbout;
-
-  closePopup();
-}
-
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  let newName = nameInput.value;
-  let newAbout = aboutInput.value;
-
-  profileName.textContent = newName;
-  profileAbout.textContent = newAbout;
-
+  profileName.textContent = nameInput.value;
+  profileAbout.textContent = aboutInput.value;
   closePopup();
 }
 
@@ -148,58 +109,8 @@ function closePopup() {
 
 editButton.addEventListener("click", openPopup);
 closeButton.addEventListener("click", closePopup);
-saveButton.addEventListener("click", handleSaveButtonClick);
+saveButton.addEventListener("click", handleProfileFormSubmit);
 formElement.addEventListener("submit", handleProfileFormSubmit);
-
-//Pop-up para adicionar novas imagens a gallery//
-const allImages = document.querySelectorAll(".gallery__img");
-
-function addImageToGallery() {
-  const title = pTitleInput.value;
-  const link = pLinkInput.value;
-
-  if (title && link) {
-    const cardList = document.querySelector(".card-list");
-
-    const cardElement = document.createElement("li");
-    cardElement.classList.add("card");
-
-    const imgElement = document.createElement("img");
-    imgElement.classList.add("card__img");
-    imgElement.src = link;
-    imgElement.alt = title;
-
-    const infoElement = document.createElement("div");
-    infoElement.classList.add("card__info");
-
-    const titleElement = document.createElement("h2");
-    titleElement.classList.add("card__img-name");
-    titleElement.textContent = title;
-
-    const deleteButton = document.createElement("button");
-    deleteButton.classList.add("card__delete-button");
-    deleteButton.addEventListener("click", () => {
-      cardElement.remove();
-    });
-
-    const likeButton = document.createElement("button");
-    likeButton.classList.add("card__like-button");
-    likeButton.addEventListener("click", () => {
-      likeButton.classList.toggle("card__like-button_active");
-    });
-
-    cardElement.appendChild(imgElement);
-    cardElement.appendChild(deleteButton);
-    cardElement.appendChild(infoElement);
-    infoElement.appendChild(titleElement);
-    infoElement.appendChild(likeButton);
-
-    // Adiciona o novo cartão no início da lista
-    cardList.insertBefore(cardElement, cardList.firstChild);
-
-    closeNewLocationPopup();
-  }
-}
 
 function openNewLocationPopup() {
   newLocationPopup.classList.add("show");
@@ -215,23 +126,19 @@ addLocationButton.addEventListener("click", openNewLocationPopup);
 closeButtonNewLocationPopup.addEventListener("click", closeNewLocationPopup);
 addImageToGalleryButton.addEventListener("click", addImageToGallery);
 
-//Pop-up das Imagens da Gallery//
-const closeImage = document.querySelector(".popup-close-image");
+const closeImage = document.querySelector(".popup__close_image");
 const popupImageContainer = document.querySelector(".popup-image-container");
 const popupImage = document.querySelector(".popup-image");
 
 document.addEventListener("click", function (event) {
   if (event.target.classList.contains("card__img")) {
-    const clickedImage = event.target.src;
-    const clickedImageAlt = event.target.alt;
-
+    const { src, alt } = event.target;
     popupImageContainer.classList.add("show");
     popupImage.classList.add("show");
     overlay.classList.add("show");
-    popupImageContainer.querySelector("#popupImage").src = clickedImage;
-    popupImageContainer.querySelector("#popupImage").alt = clickedImageAlt;
-    popupImageContainer.querySelector("#PopUpImageTitle").textContent =
-      clickedImageAlt;
+    popupImageContainer.querySelector("#popupImage").src = src;
+    popupImageContainer.querySelector("#popupImage").alt = alt;
+    popupImageContainer.querySelector("#PopUpImageTitle").textContent = alt;
   }
 });
 
