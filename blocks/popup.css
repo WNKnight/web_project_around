@@ -90,7 +90,7 @@
   cursor: pointer;
   opacity: 60%;
 }
-.popup__image-container {
+.popup__image {
   visibility: hidden;
   position: fixed;
   z-index: 2;
@@ -98,22 +98,22 @@
   opacity: 0;
   top: 10%;
 }
-.popup__image-container.show {
+.popup__image.show {
   opacity: 1;
   visibility: visible;
 }
-.popup-image {
+.popup__image-open {
   max-width: 75vw;
   max-height: 75vh;
   object-fit: contain;
   transition: opacity 0.5s ease-in-out;
   opacity: 0;
 }
-.popup-image.show {
+.popup__image-open.show {
   visibility: visible;
   opacity: 1;
 }
-.popup-image-text {
+.popup__image-text {
   font-size: 12px;
   font-weight: 400;
   line-height: 1.25;

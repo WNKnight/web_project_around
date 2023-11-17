@@ -125,10 +125,13 @@ function closeNewLocationPopup() {
 addLocationButton.addEventListener("click", openNewLocationPopup);
 closeButtonNewLocationPopup.addEventListener("click", closeNewLocationPopup);
 addImageToGalleryButton.addEventListener("click", addImageToGallery);
+const closeButtonImage = document.querySelector(".popup___image_close");
 
-const closeImage = document.querySelector(".popup__close_image");
-const popupImageContainer = document.querySelector(".popup__image-container");
-const popupImage = document.querySelector(".popup-image");
+closeButtonImage.classList.add("popup__close");
+
+const closeImage = document.querySelector(".popup___image_close");
+const popupImageContainer = document.querySelector(".popup__image");
+const popupImage = document.querySelector(".popup__image-open");
 
 document.addEventListener("click", function (event) {
   if (event.target.classList.contains("card__img")) {
