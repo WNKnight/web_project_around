@@ -31,15 +31,21 @@
           <form class="popup__form">
             <input
               type="text"
+              minlength="2"
+              maxlength="40"
               placeholder="Nome"
               id="pName"
               class="popup__text"
+              required
             />
             <input
               type="text"
+              minlength="2"
+              maxlength="200"
               placeholder="Sobre Mim"
               id="pAboutme"
               class="popup__text"
+              required
             />
           </form>
           <button type="submit" class="popup__form-submit-button">
@@ -55,15 +61,19 @@
           <form class="popup__form">
             <input
               type="text"
+              minlength="2"
+              maxlength="30"
               placeholder="Titulo"
               id="pTitle"
               class="popup__text"
+              required
             />
             <input
               type="url"
               placeholder="Link de Imagem"
               id="pLink"
               class="popup__text"
+              required
             />
           </form>
           <button
