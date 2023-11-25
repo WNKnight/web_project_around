@@ -125,11 +125,9 @@ function closeNewLocationPopup() {
 addLocationButton.addEventListener("click", openNewLocationPopup);
 closeButtonNewLocationPopup.addEventListener("click", closeNewLocationPopup);
 addImageToGalleryButton.addEventListener("click", addImageToGallery);
+
 const closeButtonImage = document.querySelector(".popup-image-close");
-
 closeButtonImage.classList.add("popup__close");
-
-const closeImage = document.querySelector(".popup-image-close");
 const popupImageContainer = document.querySelector(".popup-image");
 const popupImage = document.querySelector(".popup-image-open");
 
@@ -145,8 +143,28 @@ document.addEventListener("click", function (event) {
   }
 });
 
-closeImage.addEventListener("click", () => {
+function closeImagePopup() {
   popupImageContainer.classList.remove("show");
   popupImage.classList.remove("show");
   overlay.classList.remove("show");
+}
+
+overlay.addEventListener("click", function (event) {
+  if (event.target === overlay) {
+    closePopup();
+    closeNewLocationPopup();
+    closeImagePopup();
+  }
 });
+
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") {
+    closePopup();
+    closeNewLocationPopup();
+    closeImagePopup();
+  }
+});
+
+if (closeButtonImage) {
+  closeButtonImage.addEventListener("click", closeImagePopup);
+}
