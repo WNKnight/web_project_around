@@ -28,27 +28,36 @@
         <section class="popup" id="editPopup">
           <div class="popup__close popup__close_edit"></div>
           <h2 class="popup__title" id="pEdit">Editar Perfil</h2>
-          <form class="popup__form">
-            <input
-              type="text"
-              minlength="2"
-              maxlength="40"
-              placeholder="Nome"
-              id="pName"
-              class="popup__text"
-              required
-            />
-            <input
-              type="text"
-              minlength="2"
-              maxlength="200"
-              placeholder="Sobre Mim"
-              id="pAboutme"
-              class="popup__text"
-              required
-            />
+          <form class="popup__form" id="profileForm">
+            <label class="form__field">
+              <input
+                type="text"
+                minlength="2"
+                maxlength="40"
+                placeholder="Nome"
+                id="pName"
+                class="popup__text"
+                required
+              />
+              <span class="error-message" id="nameError"></span>
+            </label>
+            <label class="form__field">
+              <input
+                type="text"
+                minlength="2"
+                maxlength="200"
+                placeholder="Sobre Mim"
+                id="pAboutme"
+                class="popup__text"
+                required
+              />
+              <span class="error-message" id="aboutError"></span>
+            </label>
           </form>
-          <button type="submit" class="popup__form-submit-button">
+          <button
+            type="submit"
+            class="popup__form-submit-button popup__form-submit-button_disabled"
+          >
             Salvar
           </button>
         </section>
@@ -58,34 +67,40 @@
             id="closeNewLocation"
           ></div>
           <h2 class="popup__title" id="pAdd">Novo Local</h2>
-          <form class="popup__form">
-            <input
-              type="text"
-              minlength="2"
-              maxlength="30"
-              placeholder="Titulo"
-              id="pTitle"
-              class="popup__text"
-              required
-            />
-            <input
-              type="url"
-              placeholder="Link de Imagem"
-              id="pLink"
-              class="popup__text"
-              required
-            />
+          <form class="popup__form" id="newLocationPopupForm">
+            <label class="form__field">
+              <input
+                type="text"
+                minlength="2"
+                maxlength="30"
+                placeholder="Titulo"
+                id="pTitle"
+                class="popup__text"
+                required
+              />
+              <span class="error-message" id="pTitleError"></span>
+            </label>
+            <label class="form__field">
+              <input
+                type="url"
+                placeholder="Link de Imagem"
+                id="pLink"
+                class="popup__text"
+                required
+              />
+              <span class="error-message" id="pLinkError"></span>
+            </label>
           </form>
           <button
             type="submit"
-            class="popup__form-submit-button"
+            class="popup__form-submit-button popup__form-submit-button_disabled"
             id="createButton"
           >
             Criar
           </button>
         </section>
         <section class="popup-image">
-          <img class="popup-image-open" id="popupImage" />
+          <img class="popup-image-open" src="" alt="" id="popupImage" />
           <div class="popup-image-close"></div>
           <h2 class="popup-image-text" id="PopUpImageTitle"></h2>
         </section>
@@ -106,7 +121,8 @@
         <footer class="footer">
           <h2 class="footer__copyright">&copy; 2023 Around The U.S.</h2>
         </footer>
-        <script src="./scripts/script.js"></script>
+        <script src="./scripts/validate.js"></script>
+        <script src="./scripts/index.js"></script>
       </main>
     </div>
   </body>
