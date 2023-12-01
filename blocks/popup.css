@@ -56,10 +56,9 @@
   gap: 30px;
   margin: 0 auto 48px;
 }
-.form__field {
+.popup__form-field {
   display: flex;
   flex-direction: column;
-  width: 100%;
   position: relative;
 }
 .popup__title {
@@ -74,6 +73,7 @@
   border: none;
   border-bottom: 1px solid #aab0b3;
   padding: 0;
+  width: 100%;
 }
 .popup__text:focus {
   outline: none;
@@ -115,10 +115,9 @@
   font-size: 12px;
   color: red;
   opacity: 0;
+  transition: 0.3s;
   position: absolute;
   top: 100%;
-  left: 0;
-  transition: 0.3s;
 }
 .error-message_active {
   opacity: 1;
