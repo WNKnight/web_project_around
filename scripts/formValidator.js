@@ -1,3 +1,4 @@
+class formValidator {}
 function enableValidation(config) {
   const formList = document.querySelectorAll(config.formSelector);
 
