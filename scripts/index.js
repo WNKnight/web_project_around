@@ -21,6 +21,8 @@ const addImageToGalleryButton = newLocationPopup.querySelector(
 nameInput.value = profileName.textContent;
 aboutInput.value = profileAbout.textContent;
 
+import { Card } from "./card.js";
+
 const initialCards = [
   {
     name: "Vale de Yosemite",
@@ -49,33 +51,11 @@ const initialCards = [
 ];
 
 const galleryList = document.querySelector(".card-list");
-const cardTemplate = document.getElementById("cardTemplate");
 
-function createCard(card) {
-  const cardClone = document.importNode(cardTemplate.content, true);
-  const imgElement = cardClone.querySelector(".card__img");
-  const deleteButton = cardClone.querySelector(".card__delete-button");
-  const titleElement = cardClone.querySelector(".card__img-name");
-  const likeButton = cardClone.querySelector(".card__like-button");
-
-  imgElement.src = card.link;
-  imgElement.alt = card.name;
-  titleElement.textContent = card.name;
-
-  deleteButton.addEventListener("click", () => {
-    const cardElement = deleteButton.closest(".card");
-    cardElement.remove();
-  });
-
-  likeButton.addEventListener("click", () => {
-    likeButton.classList.toggle("card__like-button_active");
-  });
-
-  return cardClone;
-}
-
-function addCardToGallery(card) {
-  galleryList.prepend(createCard(card));
+function addCardToGallery(cardData) {
+  const card = new Card(cardData, "#cardTemplate");
+  const cardElement = card.generateCard();
+  galleryList.prepend(cardElement);
 }
 
 initialCards.forEach(addCardToGallery);
@@ -88,12 +68,6 @@ function updateButtonState(buttonElement, isValid) {
     buttonElement.classList.add("popup__form-submit-button_disabled");
     buttonElement.setAttribute("disabled", true);
   }
-}
-
-function updateSaveButtonState() {
-  const isNameValid = nameInput.checkValidity();
-  const isAboutValid = aboutInput.checkValidity();
-  updateButtonState(saveButton, isNameValid && isAboutValid);
 }
 
 function updateCreateButtonState() {
@@ -131,7 +105,10 @@ function handleSaveButtonClick() {
   }
 }
 function updateSaveButtonState() {
-  if (nameInput.checkValidity() && aboutInput.checkValidity()) {
+  const isNameValid = nameInput.checkValidity();
+  const isAboutValid = aboutInput.checkValidity();
+
+  if (isNameValid && isAboutValid) {
     saveButton.classList.remove("popup__form-submit-button_disabled");
     saveButton.removeAttribute("disabled");
   } else {
