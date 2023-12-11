@@ -10,19 +10,19 @@ const popupImageContainer = document.querySelector(".popup-image");
 const popupImage = document.querySelector(".popup-image-open");
 const addLocationButton = document.getElementById("addButton");
 
-function openPopup() {
+export function openPopup() {
   popup.classList.add("show");
   overlay.classList.add("show");
 }
 editButton.addEventListener("click", openPopup);
 closeButton.addEventListener("click", closePopup);
 
-function closePopup() {
+export function closePopup() {
   popup.classList.remove("show");
   overlay.classList.remove("show");
 }
 
-function openNewLocationPopup() {
+export function openNewLocationPopup() {
   newLocationPopup.classList.add("show");
   overlay.classList.add("show");
 }
@@ -30,7 +30,7 @@ function openNewLocationPopup() {
 addLocationButton.addEventListener("click", openNewLocationPopup);
 closeButtonNewLocationPopup.addEventListener("click", closeNewLocationPopup);
 
-function closeNewLocationPopup() {
+export function closeNewLocationPopup() {
   newLocationPopup.classList.remove("show");
   overlay.classList.remove("show");
 }

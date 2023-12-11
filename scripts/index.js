@@ -1,5 +1,6 @@
 import { Card } from "./card.js";
 import { FormValidator } from "./formValidator.js";
+import * as utils from "./utils.js";
 
 const profileName = document.querySelector(".profile__name");
 const profileAbout = document.querySelector(".profile__about");
@@ -59,7 +60,7 @@ function addImageToGallery() {
 
   if (title && link) {
     addCardToGallery({ name: title, link });
-    closeNewLocationPopup();
+    utils.closeNewLocationPopup();
   }
 
   createButtonState();
@@ -69,7 +70,7 @@ function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileAbout.textContent = aboutInput.value;
-  closePopup();
+  utils.closePopup();
 }
 
 function saveButtonState() {
