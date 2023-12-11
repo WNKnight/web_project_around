@@ -1,18 +1,11 @@
 import { Card } from "./card.js";
 import { FormValidator } from "./formValidator.js";
 
-const editButton = document.getElementById("editButton");
-const popup = document.getElementById("profilePopup");
-const overlay = document.querySelector(".overlay");
-const closeButton = document.querySelector(".popup__close");
 const profileName = document.querySelector(".profile__name");
 const profileAbout = document.querySelector(".profile__about");
 const nameInput = document.getElementById("pName");
 const aboutInput = document.getElementById("pAboutme");
 const saveButton = document.querySelector(".popup__form-submit-button");
-const newLocationPopup = document.getElementById("newLocationPopup");
-const addLocationButton = document.getElementById("addButton");
-const closeButtonNewLocationPopup = document.getElementById("closeNewLocation");
 const titleInput = document.getElementById("pTitle");
 const linkInput = document.getElementById("pLink");
 const createButton = document.getElementById("createButton");
@@ -91,20 +84,7 @@ function saveButtonState() {
     saveButton.setAttribute("disabled", true);
   }
 }
-editButton.addEventListener("click", openPopup);
-closeButton.addEventListener("click", closePopup);
 saveButton.addEventListener("click", handleProfileFormSubmit);
-
-function openPopup() {
-  popup.classList.add("show");
-  overlay.classList.add("show");
-  saveButtonState();
-}
-
-function closePopup() {
-  popup.classList.remove("show");
-  overlay.classList.remove("show");
-}
 
 function createButtonState() {
   const isTitleValid = titleInput.checkValidity();
@@ -118,64 +98,8 @@ function createButtonState() {
   }
 }
 
-function openNewLocationPopup() {
-  newLocationPopup.classList.add("show");
-  overlay.classList.add("show");
-  createButtonState();
-}
-
-function closeNewLocationPopup() {
-  newLocationPopup.classList.remove("show");
-  overlay.classList.remove("show");
-  createButtonState();
-}
-
-addLocationButton.addEventListener("click", openNewLocationPopup);
-closeButtonNewLocationPopup.addEventListener("click", closeNewLocationPopup);
 addImageToGalleryButton.addEventListener("click", addImageToGallery);
 
-const closeButtonImage = document.querySelector(".popup-image-close");
-closeButtonImage.classList.add("popup__close");
-const popupImageContainer = document.querySelector(".popup-image");
-const popupImage = document.querySelector(".popup-image-open");
-
-document.addEventListener("click", function (event) {
-  if (event.target.classList.contains("card__img")) {
-    const { src, alt } = event.target;
-    popupImageContainer.classList.add("show");
-    popupImage.classList.add("show");
-    overlay.classList.add("show");
-    popupImageContainer.querySelector("#popupImage").src = src;
-    popupImageContainer.querySelector("#popupImage").alt = alt;
-    popupImageContainer.querySelector("#PopUpImageTitle").textContent = alt;
-  }
-});
-
-function closeImagePopup() {
-  popupImageContainer.classList.remove("show");
-  popupImage.classList.remove("show");
-  overlay.classList.remove("show");
-}
-
-overlay.addEventListener("click", function (event) {
-  if (event.target === overlay) {
-    closePopup();
-    closeNewLocationPopup();
-    closeImagePopup();
-  }
-});
-
-document.addEventListener("keydown", function (event) {
-  if (event.key === "Escape") {
-    closePopup();
-    closeNewLocationPopup();
-    closeImagePopup();
-  }
-});
-
-if (closeButtonImage) {
-  closeButtonImage.addEventListener("click", closeImagePopup);
-}
 function validateProfileForm(inputElement) {
   const isNameValid = nameInput.checkValidity();
   const isAboutValid = aboutInput.checkValidity();
