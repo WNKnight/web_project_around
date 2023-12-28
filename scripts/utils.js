@@ -1,41 +1,44 @@
-const editButton = document.getElementById("editButton");
-const popup = document.getElementById("profilePopup");
 const overlay = document.querySelector(".overlay");
-const closeButton = document.querySelector(".popup__close");
+const editButton = document.getElementById("editButton");
+const addButton = document.getElementById("addButton");
+const profilePopup = document.getElementById("profilePopup");
 const newLocationPopup = document.getElementById("newLocationPopup");
+const closeProfileButton = document.getElementById("profilePopup");
 const closeButtonNewLocationPopup = document.getElementById("closeNewLocation");
 const closeButtonImage = document.querySelector(".popup-image-close");
-closeButtonImage.classList.add("popup__close");
 const popupImageContainer = document.querySelector(".popup-image");
 const popupImage = document.querySelector(".popup-image-open");
-const addLocationButton = document.getElementById("addButton");
 
+// abrir e fechar Profile Popup
 export function openPopup() {
-  popup.classList.add("show");
+  profilePopup.classList.add("show");
   overlay.classList.add("show");
 }
-editButton.addEventListener("click", openPopup);
-closeButton.addEventListener("click", closePopup);
 
 export function closePopup() {
-  popup.classList.remove("show");
+  profilePopup.classList.remove("show");
   overlay.classList.remove("show");
 }
 
+// abrir e fechar New Location Popup
 export function openNewLocationPopup() {
   newLocationPopup.classList.add("show");
   overlay.classList.add("show");
 }
 
-addLocationButton.addEventListener("click", openNewLocationPopup);
-closeButtonNewLocationPopup.addEventListener("click", closeNewLocationPopup);
-
 export function closeNewLocationPopup() {
   newLocationPopup.classList.remove("show");
   overlay.classList.remove("show");
 }
+//eventos para abrir e fechar os popups///
+editButton.addEventListener("click", openPopup);
+addButton.addEventListener("click", openNewLocationPopup);
+closeProfileButton.addEventListener("click", closePopup);
+closeButtonNewLocationPopup.addEventListener("click", closeNewLocationPopup);
+//////
 
-document.addEventListener("click", function (event) {
+// abrir e fechar Image Popup
+function openImagePopup(event) {
   if (event.target.classList.contains("card__img")) {
     const { src, alt } = event.target;
     popupImageContainer.classList.add("show");
@@ -45,7 +48,8 @@ document.addEventListener("click", function (event) {
     popupImageContainer.querySelector("#popupImage").alt = alt;
     popupImageContainer.querySelector("#PopUpImageTitle").textContent = alt;
   }
-});
+}
+document.addEventListener("click", openImagePopup);
 
 function closeImagePopup() {
   popupImageContainer.classList.remove("show");
@@ -54,9 +58,11 @@ function closeImagePopup() {
 }
 
 if (closeButtonImage) {
+  closeButtonImage.classList.add("popup__close");
   closeButtonImage.addEventListener("click", closeImagePopup);
 }
 
+// fechar Popups quando clicar no overlay ou apertar esc
 overlay.addEventListener("click", function (event) {
   if (event.target === overlay) {
     closePopup();

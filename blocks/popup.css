@@ -40,10 +40,13 @@
   bottom: 100%;
   left: 100%;
   background-repeat: no-repeat;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   transform: rotate(0deg);
   background-position: center;
+  border: none;
+  background-color: transparent;
+  padding: 0;
 }
 .popup__close:hover {
   cursor: pointer;
