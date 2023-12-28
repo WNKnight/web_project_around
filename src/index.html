@@ -26,7 +26,7 @@
           </div>
           <button class="profile__add-button" id="addButton"></button>
         </div>
-        <section class="popup" id="profilePopup">
+        <section class="popup popup-forms" id="profilePopup">
           <button
             class="popup__close popup__close_edit"
             id="closeProfile"
@@ -66,7 +66,7 @@
             Salvar
           </button>
         </section>
-        <section class="popup" id="newLocationPopup">
+        <section class="popup popup-forms" id="newLocationPopup">
           <button
             class="popup__close popup__close_new"
             id="closeNewLocation"
@@ -104,10 +104,13 @@
             Criar
           </button>
         </section>
-        <section class="popup-image">
-          <img class="popup-image-open" id="popupImage" />
-          <button class="popup-image-close"></button>
-          <h2 class="popup-image-text" id="PopUpImageTitle"></h2>
+        <section class="popup popup-image" id="popupImage">
+          <img class="popup__Image-Zoom" id="ImageZoom" />
+          <button
+            class="popup__close popup__close_image"
+            id="closeImage"
+          ></button>
+          <h2 class="popup__image-text" id="ImageTitle"></h2>
         </section>
         <div class="overlay"></div>
         <section class="gallery">
@@ -128,12 +131,10 @@
         </footer>
         <script type="module" src="./components/Card.js"></script>
         <script type="module" src="./components/formValidator.js"></script>
-        <script type="module" src="./components/utils.js"></script>
         <script type="module" src="./components/Popup.js"></script>
         <script type="module" src="./components/PopupWithForm.js"></script>
         <script type="module" src="./components/PopupWithImage.js"></script>
         <script type="module" src="./components/Section.js"></script>
-        <script type="module" src="./components/utils.js"></script>
         <script type="module" src="./pages/index.js"></script>
       </main>
     </div>

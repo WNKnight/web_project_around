@@ -1,4 +1,4 @@
-.popup {
+.popup-forms {
   visibility: hidden;
   width: 48.9%;
   background-color: #fff;
@@ -11,7 +11,7 @@
   opacity: 0;
   transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
 }
-.popup.show {
+.popup-forms.show {
   visibility: visible;
   opacity: 1;
 }
@@ -137,23 +137,18 @@
   opacity: 1;
   visibility: visible;
 }
-.popup-image-open {
+.popup__Image-Zoom {
   max-width: 75vw;
   max-height: 75vh;
   object-fit: contain;
-  transition: opacity 0.5s ease-in-out;
-  opacity: 0;
 }
-.popup-image-open.show {
-  visibility: visible;
-  opacity: 1;
-}
-.popup-image-text {
+.popup__image-text {
   font-size: 12px;
   font-weight: 400;
   line-height: 1.25;
   color: #fff;
 }
+
 @media screen and (max-width: 420px) {
   .popup {
     width: 90%;

@@ -1,8 +1,8 @@
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/formValidator.js";
-import * as utils from "../components/utils.js";
 import { Section } from "../components/Section.js";
 import { Popup } from "../components/Popup.js";
+import { PopupWithImage } from "../components/PopupWithImage.js";
 
 const profileName = document.querySelector(".profile__name");
 const profileAbout = document.querySelector(".profile__about");
@@ -181,3 +181,14 @@ newLocationFormValidator.enableValidation();
 
 editButton.addEventListener("click", () => profilePopup.open());
 addButton.addEventListener("click", () => newLocationPopup.open());
+
+const popupWithImage = new PopupWithImage("#popupImage");
+
+function openImagePopup(event) {
+  if (event.target.classList.contains("card__img")) {
+    const { src, alt } = event.target;
+    popupWithImage.open(src, alt, alt);
+  }
+}
+
+document.addEventListener("click", openImagePopup);
