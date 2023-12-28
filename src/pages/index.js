@@ -1,6 +1,6 @@
-import { Card } from "./Card.js";
-import { FormValidator } from "./formValidator.js";
-import * as utils from "./utils.js";
+import { Card } from "../components/Card.js";
+import { FormValidator } from "../components/formValidator.js";
+import * as utils from "../components/utils.js";
 
 const profileName = document.querySelector(".profile__name");
 const profileAbout = document.querySelector(".profile__about");
