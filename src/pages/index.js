@@ -2,18 +2,18 @@ import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/formValidator.js";
 import * as utils from "../components/utils.js";
 import { Section } from "../components/Section.js";
+import { Popup } from "../components/Popup.js";
 
 const profileName = document.querySelector(".profile__name");
 const profileAbout = document.querySelector(".profile__about");
 const nameInput = document.getElementById("pName");
 const aboutInput = document.getElementById("pAboutme");
-const saveButton = document.querySelector(".popup__form-submit-button");
+const saveButton = document.getElementById("saveButton");
 const titleInput = document.getElementById("pTitle");
 const linkInput = document.getElementById("pLink");
 const createButton = document.getElementById("createButton");
-const addImageToGalleryButton = newLocationPopup.querySelector(
-  ".popup__form-submit-button"
-);
+const profilePopup = new Popup("#profilePopup");
+const newLocationPopup = new Popup("#newLocationPopup");
 
 nameInput.value = profileName.textContent;
 aboutInput.value = profileAbout.textContent;
@@ -69,7 +69,7 @@ function addImageToGallery() {
 
   if (title && link) {
     renderCard({ name: title, link });
-    utils.closeNewLocationPopup();
+    newLocationPopup.close();
   }
 
   createButtonState();
@@ -79,7 +79,7 @@ function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileAbout.textContent = aboutInput.value;
-  utils.closePopup();
+  profilePopup.close();
 }
 
 function saveButtonState() {
@@ -108,7 +108,7 @@ function createButtonState() {
   }
 }
 
-addImageToGalleryButton.addEventListener("click", addImageToGallery);
+createButton.addEventListener("click", addImageToGallery);
 
 function validateProfileForm(inputElement) {
   const isNameValid = nameInput.checkValidity();
@@ -178,3 +178,6 @@ const newLocationFormValidator = new FormValidator(
 
 profileFormValidator.enableValidation();
 newLocationFormValidator.enableValidation();
+
+editButton.addEventListener("click", () => profilePopup.open());
+addButton.addEventListener("click", () => newLocationPopup.open());
