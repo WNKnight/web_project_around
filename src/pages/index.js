@@ -1,6 +1,7 @@
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/formValidator.js";
 import * as utils from "../components/utils.js";
+import { Section } from "../components/Section.js";
 
 const profileName = document.querySelector(".profile__name");
 const profileAbout = document.querySelector(".profile__about");
@@ -44,22 +45,30 @@ const initialCards = [
   },
 ];
 
-const galleryList = document.querySelector(".card-list");
+const gallerySection = new Section(
+  {
+    items: initialCards,
+    renderer: renderCard,
+  },
+  ".card-list"
+);
 
-function addCardToGallery(cardData) {
+gallerySection.render();
+
+function renderCard(cardData) {
   const card = new Card(cardData, "#cardTemplate");
   const cardElement = card.generateCard();
-  galleryList.prepend(cardElement);
+  gallerySection.addItem(cardElement);
 }
 
-initialCards.forEach(addCardToGallery);
+initialCards.forEach(renderCard);
 
 function addImageToGallery() {
   const title = titleInput.value;
   const link = linkInput.value;
 
   if (title && link) {
-    addCardToGallery({ name: title, link });
+    renderCard({ name: title, link });
     utils.closeNewLocationPopup();
   }
 
