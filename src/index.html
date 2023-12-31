@@ -3,20 +3,22 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./vendor/normalize.css" />
-    <link rel="stylesheet" href="./pages/index.css" />
     <title>EUA Afora</title>
   </head>
   <body>
     <div class="page">
       <header class="header">
-        <img class="header__logo" src="./images/logo.svg" alt="logo" />
+        <img
+          class="header__logo"
+          src="<%= require('./images/logo.png') %>"
+          alt="logo"
+        />
       </header>
       <main class="content">
         <div class="profile">
           <img
             class="profile__avatar"
-            src="./images/Avatar.jpg"
+            src="<%= require('./images/Avatar.png') %>"
             alt="foto de perfil"
           />
           <div class="profile__info">
@@ -129,13 +131,6 @@
         <footer class="footer">
           <h2 class="footer__copyright">&copy; 2023 Around The U.S.</h2>
         </footer>
-        <script type="module" src="./components/Card.js"></script>
-        <script type="module" src="./components/formValidator.js"></script>
-        <script type="module" src="./components/Popup.js"></script>
-        <script type="module" src="./components/PopupWithForm.js"></script>
-        <script type="module" src="./components/PopupWithImage.js"></script>
-        <script type="module" src="./components/Section.js"></script>
-        <script type="module" src="./pages/index.js"></script>
       </main>
     </div>
   </body>
