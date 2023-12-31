@@ -3,6 +3,7 @@ import { FormValidator } from "../components/formValidator.js";
 import { Section } from "../components/Section.js";
 import { Popup } from "../components/Popup.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
+import { UserInfo } from "../components/UserInfo.js";
 
 const profileName = document.querySelector(".profile__name");
 const profileAbout = document.querySelector(".profile__about");
@@ -14,6 +15,8 @@ const linkInput = document.getElementById("pLink");
 const createButton = document.getElementById("createButton");
 const profilePopup = new Popup("#profilePopup");
 const newLocationPopup = new Popup("#newLocationPopup");
+
+const userInfo = new UserInfo(".profile__name", ".profile__about");
 
 nameInput.value = profileName.textContent;
 aboutInput.value = profileAbout.textContent;
@@ -77,8 +80,9 @@ function addImageToGallery() {
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  profileName.textContent = nameInput.value;
-  profileAbout.textContent = aboutInput.value;
+  const newName = nameInput.value;
+  const newAbout = aboutInput.value;
+  userInfo.setUserInfo(newName, newAbout);
   profilePopup.close();
 }
 
@@ -109,6 +113,8 @@ function createButtonState() {
 }
 
 createButton.addEventListener("click", addImageToGallery);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function validateProfileForm(inputElement) {
   const isNameValid = nameInput.checkValidity();
@@ -184,11 +190,9 @@ addButton.addEventListener("click", () => newLocationPopup.open());
 
 const popupWithImage = new PopupWithImage("#popupImage");
 
-function openImagePopup(event) {
+document.addEventListener("click", (event) => {
   if (event.target.classList.contains("card__img")) {
     const { src, alt } = event.target;
     popupWithImage.open(src, alt, alt);
   }
-}
-
-document.addEventListener("click", openImagePopup);
+});
