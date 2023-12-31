@@ -1,9 +1,9 @@
-import { Card } from "../components/Card.js";
-import { FormValidator } from "../components/formValidator.js";
-import { Section } from "../components/Section.js";
-import { Popup } from "../components/Popup.js";
-import { PopupWithImage } from "../components/PopupWithImage.js";
-import { UserInfo } from "../components/UserInfo.js";
+import Card from "../components/Card.js";
+import FormValidator from "../components/formValidator.js";
+import Section from "../components/Section.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
 
 const profileName = document.querySelector(".profile__name");
 const profileAbout = document.querySelector(".profile__about");
@@ -13,8 +13,8 @@ const saveButton = document.getElementById("saveButton");
 const titleInput = document.getElementById("pTitle");
 const linkInput = document.getElementById("pLink");
 const createButton = document.getElementById("createButton");
-const profilePopup = new Popup("#profilePopup");
-const newLocationPopup = new Popup("#newLocationPopup");
+const editButton = document.getElementById("editButton");
+const addButton = document.getElementById("addButton");
 
 const userInfo = new UserInfo(".profile__name", ".profile__about");
 
@@ -63,58 +63,6 @@ function renderCard(cardData) {
   const cardElement = card.generateCard();
   gallerySection.addItem(cardElement);
 }
-
-initialCards.forEach(renderCard);
-
-function addImageToGallery() {
-  const title = titleInput.value;
-  const link = linkInput.value;
-
-  if (title && link) {
-    renderCard({ name: title, link });
-    newLocationPopup.close();
-  }
-
-  createButtonState();
-}
-
-function handleProfileFormSubmit(evt) {
-  evt.preventDefault();
-  const newName = nameInput.value;
-  const newAbout = aboutInput.value;
-  userInfo.setUserInfo(newName, newAbout);
-  profilePopup.close();
-}
-
-function saveButtonState() {
-  const isNameValid = nameInput.checkValidity();
-  const isAboutValid = aboutInput.checkValidity();
-
-  if (isNameValid && isAboutValid) {
-    saveButton.classList.remove("popup__form-submit-button_disabled");
-    saveButton.removeAttribute("disabled");
-  } else {
-    saveButton.classList.add("popup__form-submit-button_disabled");
-    saveButton.setAttribute("disabled", true);
-  }
-}
-saveButton.addEventListener("click", handleProfileFormSubmit);
-
-function createButtonState() {
-  const isTitleValid = titleInput.checkValidity();
-  const isLinkValid = linkInput.checkValidity();
-  if (isTitleValid && isLinkValid) {
-    createButton.classList.remove("popup__form-submit-button_disabled");
-    createButton.removeAttribute("disabled");
-  } else {
-    createButton.classList.add("popup__form-submit-button_disabled");
-    createButton.setAttribute("disabled", true);
-  }
-}
-
-createButton.addEventListener("click", addImageToGallery);
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function validateProfileForm(inputElement) {
   const isNameValid = nameInput.checkValidity();
@@ -185,8 +133,78 @@ const newLocationFormValidator = new FormValidator(
 profileFormValidator.enableValidation();
 newLocationFormValidator.enableValidation();
 
-editButton.addEventListener("click", () => profilePopup.open());
-addButton.addEventListener("click", () => newLocationPopup.open());
+///////////////////popup profile////////////////////////
+editButton.addEventListener("click", () => {
+  saveButtonState();
+  profilePopup.open();
+});
+
+const profilePopup = new PopupWithForm("#profilePopup", (inputValues) => {
+  const { pName, pAboutme } = inputValues;
+
+  userInfo.setUserInfo(pName, pAboutme);
+  profilePopup.close();
+});
+
+function saveButtonState() {
+  const isNameValid = nameInput.checkValidity();
+  const isAboutValid = aboutInput.checkValidity();
+
+  if (isNameValid && isAboutValid) {
+    saveButton.classList.remove("popup__form-submit-button_disabled");
+    saveButton.removeAttribute("disabled");
+  } else {
+    saveButton.classList.add("popup__form-submit-button_disabled");
+    saveButton.setAttribute("disabled", true);
+  }
+}
+
+///////////////popup newLocation/////////////////////
+
+addButton.addEventListener("click", () => {
+  createButtonState();
+  newLocationPopup.open();
+});
+
+const newLocationPopup = new PopupWithForm(
+  "#newLocationPopup",
+  (inputValues) => {
+    const { pTitle, pLink } = inputValues;
+
+    if (pTitle && pLink) {
+      renderCard({ name: pTitle, link: pLink });
+      newLocationPopup.close();
+    }
+
+    createButtonState();
+  }
+);
+
+function createButtonState() {
+  const isTitleValid = titleInput.checkValidity();
+  const isLinkValid = linkInput.checkValidity();
+
+  if (isTitleValid && isLinkValid) {
+    createButton.classList.remove("popup__form-submit-button_disabled");
+    createButton.removeAttribute("disabled");
+  } else {
+    createButton.classList.add("popup__form-submit-button_disabled");
+    createButton.setAttribute("disabled", true);
+  }
+}
+
+saveButton.addEventListener("click", () => {
+  const pName = nameInput.value;
+  const pAboutme = aboutInput.value;
+  profilePopup.submit({ pName, pAboutme });
+});
+
+createButton.addEventListener("click", () => {
+  const pTitle = titleInput.value;
+  const pLink = linkInput.value;
+  newLocationPopup.submit({ pTitle, pLink });
+});
+/////////////popup image////////////
 
 const popupWithImage = new PopupWithImage("#popupImage");
 
