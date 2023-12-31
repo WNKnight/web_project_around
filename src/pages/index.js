@@ -59,7 +59,7 @@ const gallerySection = new Section(
 gallerySection.render();
 
 function renderCard(cardData) {
-  const card = new Card(cardData, "#cardTemplate");
+  const card = new Card(cardData, "#cardTemplate", handleCardClick);
   const cardElement = card.generateCard();
   gallerySection.addItem(cardElement);
 }
@@ -205,12 +205,7 @@ createButton.addEventListener("click", () => {
   newLocationPopup.submit({ pTitle, pLink });
 });
 /////////////popup image////////////
-
-const popupWithImage = new PopupWithImage("#popupImage");
-
-document.addEventListener("click", (event) => {
-  if (event.target.classList.contains("card__img")) {
-    const { src, alt } = event.target;
-    popupWithImage.open(src, alt, alt);
-  }
-});
+function handleCardClick(imageSrc, imageAlt) {
+  const popupWithImage = new PopupWithImage("#popupImage");
+  popupWithImage.open(imageSrc, imageAlt, imageAlt);
+}
