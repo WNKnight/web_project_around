@@ -6,6 +6,7 @@ export default class Api {
       "Content-Type": "application/json",
     };
   }
+
   getUserInfo() {
     return fetch(`${this.baseUrl}/users/me`, {
       headers: this.headers,
@@ -14,6 +15,17 @@ export default class Api {
         return res.json();
       }
       return Promise.reject(`Error: ${res.status}`);
+    });
+  }
+
+  getInitialCards() {
+    return fetch(`${this.baseUrl}/cards`, {
+      headers: this.headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error:${res.status}`);
     });
   }
 }

@@ -1,9 +1,10 @@
 export default class Card {
-  constructor(data, templateSelector, handleCardClick) {
+  constructor(data, templateSelector, handleCardClick, cardId) {
     this._name = data.name;
     this._image = data.link;
     this._templateSelector = templateSelector;
     this._handleCardClick = handleCardClick;
+    this._cardId = cardId;
   }
 
   _getTemplate() {
@@ -49,6 +50,7 @@ export default class Card {
 
     const cardName = cardElement.querySelector(".card__img-name");
     cardName.textContent = this._name;
+    cardElement.cardId = this._cardId;
 
     this._setEventListeners(cardElement);
 
