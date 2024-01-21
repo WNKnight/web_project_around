@@ -9,7 +9,8 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 
 const profileName = document.querySelector(".profile__name");
-const profileAbout = document.querySelector(".profile__about");
+const profileAbout = document.getElementById(".profile__about");
+const AvatarImage = document.getElementById(".profile__avatar");
 const nameInput = document.getElementById("pName");
 const aboutInput = document.getElementById("pAboutme");
 const saveButton = document.getElementById("saveButton");
@@ -24,10 +25,21 @@ const api = new Api({
   token: "7887b144-3999-4d14-a3d6-51691cca960c",
 });
 
-const userInfo = new UserInfo(".profile__name", ".profile__about");
+const userInfo = new UserInfo(
+  ".profile__name",
+  ".profile__about",
+  ".profile__avatar"
+);
 
-nameInput.value = profileName.textContent;
-aboutInput.value = profileAbout.textContent;
+api
+  .getUserInfo()
+  .then((userData) => {
+    const { name, about, avatar, _id } = userData;
+    console.log(`Dados do Usuario:`, userData);
+  })
+  .catch((error) => {
+    console.error(`Erro ao carregar informações do usuário: ${error}`);
+  });
 
 const initialCards = [
   {
