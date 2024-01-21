@@ -34,7 +34,9 @@ const userInfo = new UserInfo(
 api
   .getUserInfo()
   .then((userData) => {
-    const { name, about, avatar, _id } = userData;
+    userInfo.setUserInfo(userData.name, userData.about);
+    userData.avatar, userData._id;
+
     console.log(`Dados do Usuario:`, userData);
   })
   .catch((error) => {
@@ -53,6 +55,7 @@ api
   .then((initialCards) => {
     gallerySection.setItems(initialCards);
     gallerySection.render();
+    console.log("Dados dos Cards:", initialCards);
   })
   .catch((error) => {
     console.log(`Erro ao carregar cartões iniciais: ${error}`);
@@ -63,6 +66,77 @@ function renderCard(cardData) {
   const cardElement = card.generateCard();
   gallerySection.addItem(cardElement);
 }
+
+const formValidator = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__text",
+  submitButtonSelector: ".popup__form-submit-button",
+  inactiveButtonClass: "popup__form-submit-button_disabled",
+  inputErrorClass: "error-message",
+  errorClass: "error-message_active",
+};
+
+const profileForm = document.getElementById("profileForm");
+const newLocationFormElement = document.getElementById("newLocationForm");
+
+const profileFormValidator = new FormValidator(formValidator, profileForm);
+const newLocationFormValidator = new FormValidator(
+  formValidator,
+  newLocationFormElement
+);
+
+profileFormValidator.enableValidation();
+newLocationFormValidator.enableValidation();
+
+/////////////Profile////////////////
+editButton.addEventListener("click", () => {
+  saveButtonState();
+  profilePopup.open();
+});
+
+const profilePopup = new PopupWithForm("#profilePopup", (inputValues) => {
+  const { pName, pAboutme } = inputValues;
+
+  userInfo.setUserInfo(pName, pAboutme);
+  profilePopup.close();
+});
+
+function saveButtonState() {
+  const isNameValid = nameInput.checkValidity();
+  const isAboutValid = aboutInput.checkValidity();
+
+  if (isNameValid && isAboutValid) {
+    saveButton.classList.remove("popup__form-submit-button_disabled");
+    saveButton.removeAttribute("disabled");
+  } else {
+    saveButton.classList.add("popup__form-submit-button_disabled");
+    saveButton.setAttribute("disabled", true);
+  }
+}
+saveButton.addEventListener("click", (event) => {
+  event.preventDefault();
+
+  const pName = nameInput.value;
+  const pAboutme = aboutInput.value;
+  const saveButtonText = document.getElementById("saveButtonText");
+
+  saveButton.setAttribute("disabled", true);
+  saveButtonText.textContent = "Salvando...";
+
+  api
+    .editUserInfo({ name: pName, about: pAboutme })
+    .then(() => {
+      userInfo.setUserInfo(pName, pAboutme);
+      profilePopup.close();
+    })
+    .catch((error) => {
+      console.error("Erro ao salvar:", error);
+    })
+    .finally(() => {
+      saveButtonText.textContent = "Salvar";
+      saveButton.removeAttribute("disabled");
+    });
+});
 
 function validateProfileForm(inputElement) {
   const isNameValid = nameInput.checkValidity();
@@ -82,7 +156,7 @@ function validateProfileForm(inputElement) {
 }
 nameInput.addEventListener("input", () => validateProfileForm(nameInput));
 aboutInput.addEventListener("input", () => validateProfileForm(aboutInput));
-
+/////////////NewLocation////////////
 function validateNewLocation(inputElement) {
   const isTitleValid = titleInput.checkValidity();
   const isLinkValid = linkInput.checkValidity();
@@ -111,55 +185,6 @@ function validateNewLocation(inputElement) {
 }
 titleInput.addEventListener("input", () => validateNewLocation(titleInput));
 linkInput.addEventListener("input", () => validateNewLocation(linkInput));
-
-const formValidator = {
-  formSelector: ".popup__form",
-  inputSelector: ".popup__text",
-  submitButtonSelector: ".popup__form-submit-button",
-  inactiveButtonClass: "popup__form-submit-button_disabled",
-  inputErrorClass: "error-message",
-  errorClass: "error-message_active",
-};
-
-const profileForm = document.getElementById("profileForm");
-const newLocationFormElement = document.getElementById("newLocationForm");
-
-const profileFormValidator = new FormValidator(formValidator, profileForm);
-const newLocationFormValidator = new FormValidator(
-  formValidator,
-  newLocationFormElement
-);
-
-profileFormValidator.enableValidation();
-newLocationFormValidator.enableValidation();
-
-///////////////////popup profile////////////////////////
-editButton.addEventListener("click", () => {
-  saveButtonState();
-  profilePopup.open();
-});
-
-const profilePopup = new PopupWithForm("#profilePopup", (inputValues) => {
-  const { pName, pAboutme } = inputValues;
-
-  userInfo.setUserInfo(pName, pAboutme);
-  profilePopup.close();
-});
-
-function saveButtonState() {
-  const isNameValid = nameInput.checkValidity();
-  const isAboutValid = aboutInput.checkValidity();
-
-  if (isNameValid && isAboutValid) {
-    saveButton.classList.remove("popup__form-submit-button_disabled");
-    saveButton.removeAttribute("disabled");
-  } else {
-    saveButton.classList.add("popup__form-submit-button_disabled");
-    saveButton.setAttribute("disabled", true);
-  }
-}
-
-///////////////popup newLocation/////////////////////
 
 addButton.addEventListener("click", () => {
   createButtonState();
@@ -193,17 +218,12 @@ function createButtonState() {
   }
 }
 
-saveButton.addEventListener("click", () => {
-  const pName = nameInput.value;
-  const pAboutme = aboutInput.value;
-  profilePopup.submit({ pName, pAboutme });
-});
-
 createButton.addEventListener("click", () => {
   const pTitle = titleInput.value;
   const pLink = linkInput.value;
   newLocationPopup.submit({ pTitle, pLink });
 });
+
 /////////////popup image////////////
 function handleCardClick(imageSrc, imageAlt) {
   const popupWithImage = new PopupWithImage("#popupImage");
