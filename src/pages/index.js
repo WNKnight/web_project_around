@@ -1,4 +1,5 @@
 import "./index.css";
+import Api from "../components/Api.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/formValidator.js";
 import Section from "../components/Section.js";
@@ -17,6 +18,11 @@ const linkInput = document.getElementById("pLink");
 const createButton = document.getElementById("createButton");
 const editButton = document.getElementById("editButton");
 const addButton = document.getElementById("addButton");
+
+const api = new Api({
+  baseUrl: "https://around.nomoreparties.co/v1/web_ptbr_08",
+  token: "7887b144-3999-4d14-a3d6-51691cca960c",
+});
 
 const userInfo = new UserInfo(".profile__name", ".profile__about");
 
