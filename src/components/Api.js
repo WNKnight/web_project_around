@@ -38,7 +38,20 @@ export default class Api {
       if (res.ok) {
         return res.json();
       }
-      return Promise.reject(`Error: ${res.status}`);
+      return Promise.reject(`Erro ao editar o perfil: ${res.status}`);
+    });
+  }
+
+  addCard(data) {
+    return fetch(`${this.baseUrl}/cards`, {
+      method: "POST",
+      headers: this.headers,
+      body: JSON.stringify(data),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Erro ao adicionar o card: ${res.status}`);
     });
   }
 }

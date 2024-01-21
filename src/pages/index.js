@@ -89,6 +89,7 @@ profileFormValidator.enableValidation();
 newLocationFormValidator.enableValidation();
 
 /////////////Profile////////////////
+
 editButton.addEventListener("click", () => {
   saveButtonState();
   profilePopup.open();
@@ -156,7 +157,9 @@ function validateProfileForm(inputElement) {
 }
 nameInput.addEventListener("input", () => validateProfileForm(nameInput));
 aboutInput.addEventListener("input", () => validateProfileForm(aboutInput));
+
 /////////////NewLocation////////////
+
 function validateNewLocation(inputElement) {
   const isTitleValid = titleInput.checkValidity();
   const isLinkValid = linkInput.checkValidity();
@@ -218,10 +221,29 @@ function createButtonState() {
   }
 }
 
-createButton.addEventListener("click", () => {
+createButton.addEventListener("click", (evt) => {
+  evt.preventDefault();
+
   const pTitle = titleInput.value;
   const pLink = linkInput.value;
-  newLocationPopup.submit({ pTitle, pLink });
+  const createButtonText = document.getElementById("createButtonText");
+
+  createButton.setAttribute("disabled", true);
+  createButtonText.textContent = "Criando...";
+
+  api
+    .addCard({ name: pTitle, link: pLink })
+    .then((newCard) => {
+      renderCard(newCard);
+      newLocationPopup.close();
+    })
+    .catch((error) => {
+      console.log("Erro ao criar o card:", error);
+    })
+    .finally(() => {
+      createButtonText.textContent = "Criar";
+      createButton.removeAttribute("disabled");
+    });
 });
 
 /////////////popup image////////////
