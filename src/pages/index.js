@@ -9,8 +9,8 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 
 const profileName = document.querySelector(".profile__name");
-const profileAbout = document.getElementById(".profile__about");
-const AvatarImage = document.getElementById(".profile__avatar");
+const profileAbout = document.querySelector(".profile__about");
+const AvatarImage = document.querySelector(".profile__avatar");
 const nameInput = document.getElementById("pName");
 const aboutInput = document.getElementById("pAboutme");
 const saveButton = document.getElementById("saveButton");

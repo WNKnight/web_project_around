@@ -62,9 +62,14 @@
   opacity: 60%;
   transition: linear 0.2s;
 }
+.card__like-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .card__like-button {
-  width: 25px;
-  height: 20px;
+  width: 21px;
+  height: 21px;
   background-image: url(../images/like-button.png);
   background-repeat: no-repeat;
   border: none;
