@@ -11,6 +11,7 @@ export default class Card {
     this._handleCardClick = handleCardClick;
     this._api = api;
     this._userInfo = userInfo;
+    this._isLiked = this._getLikeState();
   }
 
   _getTemplate() {
@@ -56,12 +57,50 @@ export default class Card {
     }
   }
 
-  _handleLikeClick(likeButton) {
-    likeButton.classList.toggle("card__like-button_active");
+  _handleLikeClick() {
+    if (!this._isLiked) {
+      this._api
+        .likeCard(this._id)
+        .then(({ likes }) => {
+          console.log("Curtida processada com sucesso:", likes);
+          this._updateLikeState(true, likes.length);
+          this._saveLikeState(true);
+        })
+        .catch((error) => {
+          console.error("Erro ao processar dar like no cartão:", error);
+        });
+    } else {
+      this._api
+        .unLikeCard(this._id)
+        .then(({ likes }) => {
+          this._updateLikeState(false, likes.length);
+          this._saveLikeState(false);
+        })
+        .catch((error) => {
+          console.error("Erro ao processar dar dislike no cartão:", error);
+        });
+    }
   }
 
-  _likeCount(likeCount) {
-    likeCount.textContent = likeCount;
+  _updateLikeState(isLiked, likesCount) {
+    const likeButton = this._element.querySelector(".card__like-button");
+    const likeCount = this._element.querySelector(".card__like-count");
+
+    likeButton.classList.toggle("card__like-button_active", isLiked);
+    likeCount.textContent = likesCount;
+
+    this._isLiked = isLiked;
+  }
+
+  _saveLikeState(isLiked) {
+    const likesState = JSON.parse(localStorage.getItem("likesState")) || {};
+    likesState[this._id] = isLiked;
+    localStorage.setItem("likesState", JSON.stringify(likesState));
+  }
+
+  _getLikeState() {
+    const likesState = JSON.parse(localStorage.getItem("likesState")) || {};
+    return likesState[this._id] || false;
   }
 
   generateCard() {

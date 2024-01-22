@@ -54,6 +54,7 @@ export default class Api {
       return Promise.reject(`Erro ao adicionar o card: ${res.status}`);
     });
   }
+
   deleteCard(cardId) {
     return fetch(`${this.baseUrl}/cards/${cardId}`, {
       method: "DELETE",
@@ -70,6 +71,46 @@ export default class Api {
       })
       .catch((error) => {
         console.log("Erro ao processar excluir o card:", error);
+      });
+  }
+
+  likeCard(cardId) {
+    return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
+      method: "PUT",
+      headers: this.headers,
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Error:${res.status}`);
+      })
+      .then((data) => {
+        console.log("Resposta do servidor para dar like no card", data);
+        return data;
+      })
+      .catch((error) => {
+        console.log("Erroa ao processar deslike no card", error);
+      });
+  }
+
+  unLikeCard(cardId) {
+    return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
+      method: "DELETE",
+      headers: this.headers,
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .then((data) => {
+        console.log("Resposta do servidor para dar dislike no card:", data);
+        return data;
+      })
+      .catch((error) => {
+        console.error("Erro ao processar dar dislike no card:", error);
       });
   }
 }
