@@ -272,3 +272,79 @@ function handleCardClick(imageSrc, imageAlt) {
   const popupWithImage = new PopupWithImage("#popupImage");
   popupWithImage.open(imageSrc, imageAlt, imageAlt);
 }
+
+/////////////popup Avatar////////////
+editAvatarButton.addEventListener("click", (evt) => {
+  evt.preventDefault();
+  saveAvatarButtonState();
+  editAvatarPopup.open();
+});
+
+const editAvatarPopup = new PopupWithForm("#editAvatarPopup", (inputValues) => {
+  const { pLinkAvatar } = inputValues;
+  updateAvatarImage(pLinkAvatar);
+  editAvatarPopup.close();
+});
+
+function updateAvatarImage(newImageUrl) {
+  avatarImage.src = newImageUrl;
+}
+
+avatarSaveButton.addEventListener("click", (evt) => {
+  evt.preventDefault();
+  const pLinkAvatar = linkAvatarInput.value;
+  const avatarButtonText = document.getElementById("avatarButtonText");
+
+  avatarSaveButton.setAttribute("disabled", true);
+  avatarButtonText.textContent = "Salvando...";
+
+  api
+    .updateAvatar({ avatar: pLinkAvatar })
+    .then(() => {
+      updateAvatarImage(pLinkAvatar);
+      editAvatarPopup.close();
+    })
+    .catch((error) => {
+      console.log("Erro ao salvar avatar", error);
+    })
+    .finally(() => {
+      avatarButtonText.textContent = "Salvar";
+      avatarSaveButton.removeAttribute("disabled");
+    });
+});
+
+function saveAvatarButtonState() {
+  const isLinkValid = linkAvatarInput.checkValidity();
+
+  if (isLinkValid) {
+    avatarSaveButton.classList.remove("popup__form-submit-button_disabled");
+    avatarSaveButton.removeAttribute("disabled");
+  } else {
+    avatarSaveButton.classList.add("popup__form-submit-button_disabled");
+    avatarSaveButton.setAttribute("disabled", true);
+  }
+}
+
+function validateAvatar(inputElement) {
+  const isLinkValid = inputElement.checkValidity();
+
+  if (isLinkValid) {
+    avatarError.textContent = inputElement.validationMessage;
+    avatarError.classList.toggle("error-message_active", false);
+    inputElement.classList.toggle("popup__text_invalid", false);
+  } else if (inputElement.value !== "") {
+    avatarError.textContent = "Por favor, insira um endereço web válido.";
+    avatarError.classList.add("error-message_active");
+    inputElement.classList.add("popup__text_invalid");
+  } else {
+    avatarError.textContent = isLinkValid ? "" : inputElement.validationMessage;
+    avatarError.classList.toggle("error-message_active", !isLinkValid);
+    inputElement.classList.toggle("popup__text_invalid", !isLinkValid);
+  }
+
+  saveAvatarButtonState();
+}
+
+linkAvatarInput.addEventListener("input", () =>
+  validateAvatar(linkAvatarInput)
+);

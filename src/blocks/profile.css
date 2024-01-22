@@ -43,6 +43,9 @@
   width: 26px;
   height: 26px;
   border: none;
+  background-color: transparent;
+  background-image: url(../images/Avatar-Edit.png);
+  background-repeat: no-repeat;
   cursor: pointer;
   left: 48px;
   top: 48px;

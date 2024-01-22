@@ -110,6 +110,32 @@
             <span id="createButtonText">Criar</span>
           </button>
         </section>
+        <section class="popup popup-forms" id="editAvatarPopup">
+          <button
+            class="popup__close popup__close_new-avatar"
+            id="closeEditAvatar"
+          ></button>
+          <h2 class="popup__title" id="pEdAva">Alterar a foto do perfil</h2>
+          <form class="popup__form" id="newAvatarImageForm">
+            <label>
+              <input
+                type="url"
+                placeholder="Link de Imagem"
+                id="pLinkAvatar"
+                class="popup__text"
+                required
+              />
+              <span class="error-message" id="linkAvatarError"></span>
+            </label>
+          </form>
+          <button
+            type="submit"
+            class="popup__form-submit-button popup__form-submit-button_disabled"
+            id="saveAvatarButton"
+          >
+            <span id="avatarButtonText">Salvar</span>
+          </button>
+        </section>
         <section class="popup popup-forms" id="deletePopup">
           <button
             class="popup__close popup__close_delete-popup"
@@ -141,7 +167,7 @@
               <button class="card__delete-button" id="deleteButton"></button>
               <div class="card__info">
                 <h2 class="card__img-name"></h2>
-                <div class="card__like-container">
+                <div class="card__likes">
                   <button type="button" class="card__like-button"></button>
                   <span class="card__like-count">0</span>
                 </div>

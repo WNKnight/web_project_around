@@ -113,4 +113,25 @@ export default class Api {
         console.error("Erro ao processar dar dislike no card:", error);
       });
   }
+
+  updateAvatar(data) {
+    return fetch(`${this.baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this.headers,
+      body: JSON.stringify(data),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .then((data) => {
+        console.log("Resposta do servidor ao atualizar o avatar:", data);
+        return data;
+      })
+      .catch((error) => {
+        console.error("Erro ao mudar a imagem do avatar:", error);
+      });
+  }
 }
