@@ -54,4 +54,22 @@ export default class Api {
       return Promise.reject(`Erro ao adicionar o card: ${res.status}`);
     });
   }
+  deleteCard(cardId) {
+    return fetch(`${this.baseUrl}/cards/${cardId}`, {
+      method: "DELETE",
+      headers: this.headers,
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Error: ${res.status}`);
+      })
+      .then((data) => {
+        console.log("Resposta do servidor ao excluir o card:", data);
+      })
+      .catch((error) => {
+        console.log("Erro ao processar excluir o card:", error);
+      });
+  }
 }

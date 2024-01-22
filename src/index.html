@@ -16,16 +16,19 @@
       </header>
       <main class="content">
         <div class="profile">
-          <img
-            class="profile__avatar"
-            id="profileAvatar"
-            src="<%= require('./images/Avatar.png') %>"
-            alt="foto de perfil"
-          />
+          <div class="profile__avatar-container">
+            <img
+              class="profile__avatar-image"
+              src="<%= require('./images/Avatar.png') %>"
+              alt="foto de perfil"
+            />
+            <button class="profile__avatar-edit" id="avatarEdit"></button>
+            <div class="profile__avatar-overlay"></div>
+          </div>
           <div class="profile__info">
-            <h2 class="profile__name" id="profileName">Jacques Cousteau</h2>
+            <h2 class="profile__name">Jacques Cousteau</h2>
             <button class="profile__edit-button" id="editButton"></button>
-            <h3 class="profile__about" id="profileAbout">Explorar</h3>
+            <h3 class="profile__about">Explorar</h3>
           </div>
           <button class="profile__add-button" id="addButton"></button>
         </div>
@@ -107,6 +110,20 @@
             <span id="createButtonText">Criar</span>
           </button>
         </section>
+        <section class="popup popup-forms" id="deletePopup">
+          <button
+            class="popup__close popup__close_delete-popup"
+            id="closeDelete"
+          ></button>
+          <h2 class="popup__title" id="pDelete">Tem Certeza?</h2>
+          <button
+            type="submit"
+            class="popup__form-submit-button"
+            id="confirmButton"
+          >
+            Sim
+          </button>
+        </section>
         <section class="popup popup-image" id="popupImage">
           <img class="popup__Image-Zoom" id="ImageZoom" />
           <button
@@ -121,11 +138,11 @@
           <template id="cardTemplate">
             <li class="card">
               <img class="card__img" />
-              <button class="card__delete-button"></button>
+              <button class="card__delete-button" id="deleteButton"></button>
               <div class="card__info">
                 <h2 class="card__img-name"></h2>
                 <div class="card__like-container">
-                  <button class="card__like-button"></button>
+                  <button type="button" class="card__like-button"></button>
                   <span class="card__like-count">0</span>
                 </div>
               </div>

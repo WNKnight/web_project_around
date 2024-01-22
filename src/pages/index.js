@@ -7,66 +7,87 @@ import Popup from "../components/Popup.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
 const profileName = document.querySelector(".profile__name");
 const profileAbout = document.querySelector(".profile__about");
-const AvatarImage = document.querySelector(".profile__avatar");
 const nameInput = document.getElementById("pName");
 const aboutInput = document.getElementById("pAboutme");
-const saveButton = document.getElementById("saveButton");
 const titleInput = document.getElementById("pTitle");
 const linkInput = document.getElementById("pLink");
+const linkAvatarInput = document.getElementById("pLinkAvatar");
+const saveButton = document.getElementById("saveButton");
 const createButton = document.getElementById("createButton");
+const editAvatarButton = document.getElementById("avatarEdit");
 const editButton = document.getElementById("editButton");
 const addButton = document.getElementById("addButton");
+const avatarSaveButton = document.getElementById("saveAvatarButton");
+const nameError = document.getElementById("nameError");
+const aboutError = document.getElementById("aboutError");
+const titleError = document.getElementById("titleError");
+const linkError = document.getElementById("linkError");
+const avatarError = document.getElementById("linkAvatarError");
+const avatarImage = document.querySelector(".profile__avatar-image");
 
 const api = new Api({
   baseUrl: "https://around.nomoreparties.co/v1/web_ptbr_08",
   token: "7887b144-3999-4d14-a3d6-51691cca960c",
 });
 
+nameInput.value = profileName.textContent;
+aboutInput.value = profileAbout.textContent;
+
 const userInfo = new UserInfo(
   ".profile__name",
   ".profile__about",
-  ".profile__avatar"
+  ".profile__avatar-image"
 );
 
 api
   .getUserInfo()
   .then((userData) => {
-    userInfo.setUserInfo(userData.name, userData.about);
-    userData.avatar, userData._id;
-
-    console.log(`Dados do Usuario:`, userData);
+    userInfo.setUserInfo(
+      userData.name,
+      userData.about,
+      userData.avatar,
+      userData._id
+    );
   })
   .catch((error) => {
-    console.log(`Erro ao carregar informações do usuário: ${error}`);
+    console.error("Erro ao obter informações do usuário:", error);
   });
-
+/////////render dos cards
 const gallerySection = new Section(
   {
+    items: [],
     renderer: renderCard,
   },
   ".card-list"
 );
-
 api
   .getInitialCards()
   .then((initialCards) => {
     gallerySection.setItems(initialCards);
     gallerySection.render();
-    console.log("Dados dos Cards:", initialCards);
   })
   .catch((error) => {
-    console.log(`Erro ao carregar cartões iniciais: ${error}`);
+    console.error("Erro ao obter cartões:", error);
   });
 
 function renderCard(cardData) {
-  const card = new Card(cardData, "#cardTemplate", handleCardClick);
+  const card = new Card(
+    cardData,
+    "#cardTemplate",
+    handleCardClick,
+    api,
+    userInfo
+  );
+
   const cardElement = card.generateCard();
   gallerySection.addItem(cardElement);
 }
 
+//////////////////validador
 const formValidator = {
   formSelector: ".popup__form",
   inputSelector: ".popup__text",
