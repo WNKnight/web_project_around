@@ -1,34 +1,25 @@
-import Popup from "../components/Popup";
+import Popup from "./Popup";
 
 export default class PopupWithConfirmation extends Popup {
   constructor(popupSelector) {
     super(popupSelector);
     this._confirmButton = this._popup.querySelector("#confirmButton");
-  }
-
-  setOnConfirm(callback) {
-    this._handleConfirmCallback = callback;
-  }
-
-  open() {
-    super.open();
     this._confirmButton.addEventListener(
       "click",
       this._handleConfirm.bind(this)
     );
+    this._handleConfirmCallback = null;
   }
 
-  close() {
-    super.close();
-    this._confirmButton.removeEventListener(
-      "click",
-      this._handleConfirm.bind(this)
-    );
+  open(callback) {
+    this._handleConfirmCallback = callback;
+    super.open();
   }
 
   _handleConfirm() {
     if (this._handleConfirmCallback) {
       this._handleConfirmCallback();
+      this._handleConfirmCallback = null;
     }
     this.close();
   }
