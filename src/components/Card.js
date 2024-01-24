@@ -53,6 +53,31 @@ export default class Card {
     });
   }
 
+  _handleLikeClick() {
+    if (!this._isLiked) {
+      this._api
+        .likeCard(this._id)
+        .then(({ likes }) => {
+          console.log("Curtida processada com sucesso:", likes);
+          this._updateLikeState(true, likes.length);
+          this._saveLikeState(true);
+        })
+        .catch((error) => {
+          console.error("Erro ao processar dar like no cartão:", error);
+        });
+    } else {
+      this._api
+        .unLikeCard(this._id)
+        .then(({ likes }) => {
+          this._updateLikeState(false, likes.length);
+          this._saveLikeState(false);
+        })
+        .catch((error) => {
+          console.error("Erro ao processar dar dislike no cartão:", error);
+        });
+    }
+  }
+
   _updateLikeState(isLiked, likes) {
     this._isLiked = isLiked;
     this._likes = likes;

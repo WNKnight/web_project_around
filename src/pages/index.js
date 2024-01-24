@@ -3,11 +3,9 @@ import Api from "../components/Api.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/formValidator.js";
 import Section from "../components/Section.js";
-import Popup from "../components/Popup.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
-import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
 const profileName = document.querySelector(".profile__name");
 const profileAbout = document.querySelector(".profile__about");
@@ -34,9 +32,6 @@ const api = new Api({
   token: "7887b144-3999-4d14-a3d6-51691cca960c",
 });
 
-nameInput.value = profileName.textContent;
-aboutInput.value = profileAbout.textContent;
-
 const userInfo = new UserInfo(
   ".profile__name",
   ".profile__about",
@@ -52,6 +47,8 @@ api
       userData.avatar,
       userData._id
     );
+    nameInput.value = profileName.textContent;
+    aboutInput.value = profileAbout.textContent;
   })
   .catch((error) => {
     console.error("Erro ao obter informações do usuário:", error);
@@ -98,57 +95,43 @@ const formValidator = {
 };
 
 const profileForm = document.getElementById("profileForm");
-const newLocationFormElement = document.getElementById("newLocationForm");
+const newLocationForm = document.getElementById("newLocationForm");
+const avatarForm = document.getElementById("newAvatarImageForm");
 
 const profileFormValidator = new FormValidator(formValidator, profileForm);
 const newLocationFormValidator = new FormValidator(
   formValidator,
-  newLocationFormElement
+  newLocationForm
 );
+
+const avatarFormValidator = new FormValidator(formValidator, avatarForm);
 
 profileFormValidator.enableValidation();
 newLocationFormValidator.enableValidation();
-
+avatarFormValidator.enableValidation();
 /////////////Profile////////////////
-
 editButton.addEventListener("click", () => {
-  saveButtonState();
+  saveButtonState(nameInput, aboutInput, saveButton);
   profilePopup.open();
 });
 
-const profilePopup = new PopupWithForm("#profilePopup", (inputValues) => {
+const profilePopup = new PopupWithForm(
+  "#profilePopup",
+  handleProfileFormSubmit,
+  api
+);
+
+function handleProfileFormSubmit(inputValues, api) {
   const { pName, pAboutme } = inputValues;
-
-  userInfo.setUserInfo(pName, pAboutme);
-  profilePopup.close();
-});
-
-function saveButtonState() {
-  const isNameValid = nameInput.checkValidity();
-  const isAboutValid = aboutInput.checkValidity();
-
-  if (isNameValid && isAboutValid) {
-    saveButton.classList.remove("popup__form-submit-button_disabled");
-    saveButton.removeAttribute("disabled");
-  } else {
-    saveButton.classList.add("popup__form-submit-button_disabled");
-    saveButton.setAttribute("disabled", true);
-  }
-}
-saveButton.addEventListener("click", (event) => {
-  event.preventDefault();
-
-  const pName = nameInput.value;
-  const pAboutme = aboutInput.value;
-  const saveButtonText = document.getElementById("saveButtonText");
 
   saveButton.setAttribute("disabled", true);
   saveButtonText.textContent = "Salvando...";
 
   api
     .editUserInfo({ name: pName, about: pAboutme })
-    .then(() => {
-      userInfo.setUserInfo(pName, pAboutme);
+    .then((response) => {
+      const avatarUrl = response.avatar;
+      userInfo.setUserInfo(pName, pAboutme, avatarUrl);
       profilePopup.close();
     })
     .catch((error) => {
@@ -158,6 +141,16 @@ saveButton.addEventListener("click", (event) => {
       saveButtonText.textContent = "Salvar";
       saveButton.removeAttribute("disabled");
     });
+}
+
+saveButton.addEventListener("click", (event) => {
+  event.preventDefault();
+  const saveButtonText = document.getElementById("saveButtonText");
+
+  saveButton.setAttribute("disabled", true);
+  saveButtonText.textContent = "Salvando...";
+
+  profilePopup.submit();
 });
 
 function validateProfileForm(inputElement) {
@@ -174,12 +167,50 @@ function validateProfileForm(inputElement) {
     aboutInput.classList.toggle("popup__text_invalid", !isAboutValid);
   }
 
-  saveButtonState();
+  saveButtonState(nameInput, aboutInput, saveButton);
 }
+
 nameInput.addEventListener("input", () => validateProfileForm(nameInput));
 aboutInput.addEventListener("input", () => validateProfileForm(aboutInput));
 
 /////////////NewLocation////////////
+addButton.addEventListener("click", () => {
+  saveButtonState(titleInput, linkInput, createButton);
+  newLocationPopup.open();
+});
+
+const newLocationPopup = new PopupWithForm(
+  "#newLocationPopup",
+  handleNewLocationFormSubmit,
+  api
+);
+
+function handleNewLocationFormSubmit(inputValues, api) {
+  const { pTitle, pLink } = inputValues;
+
+  createButton.setAttribute("disabled", true);
+  createButton.textContent = "Criando...";
+
+  api
+    .addCard({ name: pTitle, link: pLink })
+    .then((newCard) => {
+      renderCard(newCard);
+      newLocationPopup.close();
+    })
+    .catch((error) => {
+      console.log("Erro ao criar o card:", error);
+    })
+    .finally(() => {
+      createButton.textContent = "Criar";
+      createButton.removeAttribute("disabled");
+    });
+}
+
+createButton.addEventListener("click", (evt) => {
+  evt.preventDefault();
+
+  newLocationPopup.submit();
+});
 
 function validateNewLocation(inputElement) {
   const isTitleValid = titleInput.checkValidity();
@@ -205,95 +236,26 @@ function validateNewLocation(inputElement) {
     }
   }
 
-  createButtonState();
+  saveButtonState(titleInput, linkInput, createButton);
 }
+
 titleInput.addEventListener("input", () => validateNewLocation(titleInput));
 linkInput.addEventListener("input", () => validateNewLocation(linkInput));
 
-addButton.addEventListener("click", () => {
-  createButtonState();
-  newLocationPopup.open();
-});
-
-const newLocationPopup = new PopupWithForm(
-  "#newLocationPopup",
-  (inputValues) => {
-    const { pTitle, pLink } = inputValues;
-
-    if (pTitle && pLink) {
-      renderCard({ name: pTitle, link: pLink });
-      newLocationPopup.close();
-    }
-
-    createButtonState();
-  }
-);
-
-function createButtonState() {
-  const isTitleValid = titleInput.checkValidity();
-  const isLinkValid = linkInput.checkValidity();
-
-  if (isTitleValid && isLinkValid) {
-    createButton.classList.remove("popup__form-submit-button_disabled");
-    createButton.removeAttribute("disabled");
-  } else {
-    createButton.classList.add("popup__form-submit-button_disabled");
-    createButton.setAttribute("disabled", true);
-  }
-}
-
-createButton.addEventListener("click", (evt) => {
-  evt.preventDefault();
-
-  const pTitle = titleInput.value;
-  const pLink = linkInput.value;
-  const createButtonText = document.getElementById("createButtonText");
-
-  createButton.setAttribute("disabled", true);
-  createButtonText.textContent = "Criando...";
-
-  api
-    .addCard({ name: pTitle, link: pLink })
-    .then((newCard) => {
-      renderCard(newCard);
-      newLocationPopup.close();
-    })
-    .catch((error) => {
-      console.log("Erro ao criar o card:", error);
-    })
-    .finally(() => {
-      createButtonText.textContent = "Criar";
-      createButton.removeAttribute("disabled");
-    });
-});
-
-/////////////popup image////////////
-function handleCardClick(imageSrc, imageAlt) {
-  const popupWithImage = new PopupWithImage("#popupImage");
-  popupWithImage.open(imageSrc, imageAlt, imageAlt);
-}
-
 /////////////popup Avatar////////////
-editAvatarButton.addEventListener("click", (evt) => {
-  evt.preventDefault();
+editAvatarButton.addEventListener("click", () => {
   saveAvatarButtonState();
   editAvatarPopup.open();
 });
 
-const editAvatarPopup = new PopupWithForm("#editAvatarPopup", (inputValues) => {
+const editAvatarPopup = new PopupWithForm(
+  "#editAvatarPopup",
+  handleAvatarFormSubmit,
+  api
+);
+
+function handleAvatarFormSubmit(inputValues, api) {
   const { pLinkAvatar } = inputValues;
-  updateAvatarImage(pLinkAvatar);
-  editAvatarPopup.close();
-});
-
-function updateAvatarImage(newImageUrl) {
-  avatarImage.src = newImageUrl;
-}
-
-avatarSaveButton.addEventListener("click", (evt) => {
-  evt.preventDefault();
-  const pLinkAvatar = linkAvatarInput.value;
-  const avatarButtonText = document.getElementById("avatarButtonText");
 
   avatarSaveButton.setAttribute("disabled", true);
   avatarButtonText.textContent = "Salvando...";
@@ -311,8 +273,11 @@ avatarSaveButton.addEventListener("click", (evt) => {
       avatarButtonText.textContent = "Salvar";
       avatarSaveButton.removeAttribute("disabled");
     });
-});
+}
 
+function updateAvatarImage(newImageUrl) {
+  avatarImage.src = newImageUrl;
+}
 function saveAvatarButtonState() {
   const isLinkValid = linkAvatarInput.checkValidity();
 
@@ -324,6 +289,11 @@ function saveAvatarButtonState() {
     avatarSaveButton.setAttribute("disabled", true);
   }
 }
+
+avatarSaveButton.addEventListener("click", (evt) => {
+  evt.preventDefault();
+  editAvatarPopup.submit();
+});
 
 function validateAvatar(inputElement) {
   const isLinkValid = inputElement.checkValidity();
@@ -348,3 +318,22 @@ function validateAvatar(inputElement) {
 linkAvatarInput.addEventListener("input", () =>
   validateAvatar(linkAvatarInput)
 );
+/////////////popup image////////////
+function handleCardClick(imageSrc, imageAlt) {
+  const popupWithImage = new PopupWithImage("#popupImage");
+  popupWithImage.open(imageSrc, imageAlt, imageAlt);
+}
+
+//////buton state para profile e newLocation
+function saveButtonState(inputElement, inputElement2, submitButton) {
+  const isInput1Valid = inputElement.checkValidity();
+  const isInput2Valid = inputElement2.checkValidity();
+
+  if (isInput1Valid && isInput2Valid) {
+    submitButton.classList.remove("popup__form-submit-button_disabled");
+    submitButton.removeAttribute("disabled");
+  } else {
+    submitButton.classList.add("popup__form-submit-button_disabled");
+    submitButton.setAttribute("disabled", true);
+  }
+}
