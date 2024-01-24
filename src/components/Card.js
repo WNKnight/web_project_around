@@ -61,7 +61,10 @@ export default class Card {
           console.log("Curtida processada com sucesso:", likes);
           this._updateLikeState(true, likes.length);
           this._saveLikeState(true);
+          this._element.querySelector(".card__like-count").textContent =
+            likes.length;
         })
+
         .catch((error) => {
           console.error("Erro ao processar dar like no cartão:", error);
         });
@@ -71,6 +74,8 @@ export default class Card {
         .then(({ likes }) => {
           this._updateLikeState(false, likes.length);
           this._saveLikeState(false);
+          this._element.querySelector(".card__like-count").textContent =
+            likes.length;
         })
         .catch((error) => {
           console.error("Erro ao processar dar dislike no cartão:", error);
@@ -87,8 +92,6 @@ export default class Card {
 
     likeButton.classList.toggle("card__like-button_active", isLiked);
     likesCount.textContent = likes.length;
-
-    this._saveLikeState(isLiked);
   }
 
   _saveLikeState(isLiked) {
