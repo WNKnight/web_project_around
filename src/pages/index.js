@@ -16,7 +16,7 @@ const linkInput = document.getElementById("pLink");
 const linkAvatarInput = document.getElementById("pLinkAvatar");
 const saveButton = document.getElementById("saveButton");
 const createButton = document.getElementById("createButton");
-const editAvatarButton = document.getElementById("avatarEdit");
+const avatarContainer = document.querySelector(".profile__avatar-container");
 const editButton = document.getElementById("editButton");
 const addButton = document.getElementById("addButton");
 const avatarSaveButton = document.getElementById("saveAvatarButton");
@@ -244,7 +244,7 @@ titleInput.addEventListener("input", () => validateNewLocation(titleInput));
 linkInput.addEventListener("input", () => validateNewLocation(linkInput));
 
 /////////////popup Avatar////////////
-editAvatarButton.addEventListener("click", () => {
+avatarContainer.addEventListener("click", () => {
   saveAvatarButtonState();
   editAvatarPopup.open();
 });
