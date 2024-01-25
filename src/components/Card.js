@@ -58,13 +58,11 @@ export default class Card {
       this._api
         .likeCard(this._id)
         .then(({ likes }) => {
-          console.log("Curtida processada com sucesso:", likes);
           this._updateLikeState(true, likes.length);
           this._saveLikeState(true);
           this._element.querySelector(".card__like-count").textContent =
             likes.length;
         })
-
         .catch((error) => {
           console.error("Erro ao processar dar like no cartão:", error);
         });

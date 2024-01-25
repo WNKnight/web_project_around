@@ -53,6 +53,7 @@ api
   .catch((error) => {
     console.error("Erro ao obter informações do usuário:", error);
   });
+
 /////////render dos cards
 const gallerySection = new Section(
   {
